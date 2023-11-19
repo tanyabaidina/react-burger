@@ -1,0 +1,58 @@
+.wrapper {
+    display: grid;
+    width: auto;
+    composes: pr-5 pl-5 from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css';
+    height: 100%;
+}
+
+.list__wrapper {
+    composes: pl-4 pr-8 pt-25 from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css';
+}
+
+.lonely__buns {
+    composes: pl-8 pt-4 pb-4 from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css';
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    composes: pr-4 from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css';
+    height: 39vh;
+}
+
+.item {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    align-items: center;
+}
+
+.items__wrapper {
+    box-sizing: border-box;
+    overflow-y: scroll;
+}
+
+.items__wrapper::-webkit-scrollbar {
+    width: 8px;
+}
+
+.items__wrapper::-webkit-scrollbar-track {
+    background: #2F2F37;
+}
+
+.items__wrapper::-webkit-scrollbar-thumb {
+    background: #8585AD;
+}
+
+.items__wrapper::-webkit-scrollbar-thumb:hover {
+    background: #8585AD;
+}
+
+.order {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    align-items: center;
+    composes: pt-10 pb-10 from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css';
+}

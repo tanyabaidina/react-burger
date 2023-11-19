@@ -1,0 +1,26 @@
+.header {
+    background-color: #1C1C21;
+    width: 100%;
+}
+
+.nav {
+    display: flex;
+}
+
+.wrapper {
+    display: flex;
+    justify-content: space-between;
+    width: 70%;
+    margin: 0 auto;
+}
+
+.logo {
+    transform: translateX(-83px);
+    display: block;
+}
+
+.item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}

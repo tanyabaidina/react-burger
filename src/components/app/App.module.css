@@ -1,0 +1,10 @@
+.main {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+.wrapper {
+  display: block;
+  width: 100%;
+}
