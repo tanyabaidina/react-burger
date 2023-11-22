@@ -1,7 +1,6 @@
 .wrapper {
     display: grid;
     width: min-content;
-    composes: mt-10 pr-5 pl-5 from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/box.css';
     height: 100%;
 }
 
@@ -38,37 +37,11 @@
 
 .list {
     margin: 0;
+    list-style: none;
     display: grid;
     grid-template-columns: repeat(2, 272px);
     column-gap: 24px;
     row-gap: 60px;
     padding-left: 0;
     justify-content: center;
-}
-
-.card {
-    position: relative;
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    cursor: pointer;
-}
-
-.pricewrap {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-}
-
-.price {
-    display: block;
-}
-
-.title {
-    margin: 0;
-    text-align: center;
 }

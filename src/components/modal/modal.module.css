@@ -1,0 +1,31 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    width: 720px;
+    min-height: 350px;
+    background-color: #1C1C21;
+    border-radius: 40px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+}
+
+.close__button {
+    all: initial;
+    position: absolute;
+    right: 40px;
+    top: 60px;
+    cursor: pointer;
+}
+
+.header__wrapper {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    height: 64px;
+    width: calc(100% - 80px);
+}
