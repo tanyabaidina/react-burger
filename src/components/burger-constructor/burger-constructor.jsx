@@ -11,8 +11,7 @@ function BurgerConstructor({ ingredients, onClick }) {
     const mains = useMemo(() => ingredients.filter(item => item.type === "main"), [ingredients]);
     const sauces = useMemo(() => ingredients.filter(item => item.type === "sauce"), [ingredients]);
 
-    const topBun = buns[0];
-    const bottomBun = buns[1];
+    const lonelyBun = buns[0];
 
     const otherIngredients = [mains[1], mains[0], mains[3], mains[5], mains[6], sauces[0]];
 
@@ -20,11 +19,11 @@ function BurgerConstructor({ ingredients, onClick }) {
         <section className={constructorStyle.wrapper + " pr-5 pl-5"}>
             <div className={"pl-4 pr-8 pt-25"}>
                 <div className={"pl-8 pt-4 pb-4"}>
-                    {topBun && (<ConstructorElement type="top"
+                    {lonelyBun && (<ConstructorElement type="top"
                                                     isLocked={true}
-                                                    text={topBun.name + " (верх)"}
-                                                    price={topBun.price}
-                                                    thumbnail={topBun.image} />
+                                                    text={lonelyBun.name + " (верх)"}
+                                                    price={lonelyBun.price}
+                                                    thumbnail={lonelyBun.image} />
                     )}
                 </div>
                 <div className={constructorStyle.items__wrapper}>
@@ -40,11 +39,11 @@ function BurgerConstructor({ ingredients, onClick }) {
                     </ul>
                 </div>
                 <div className={"pl-8 pt-4 pb-4"}>
-                    {bottomBun && (<ConstructorElement type="bottom"
+                    {lonelyBun && (<ConstructorElement type="bottom"
                                                        isLocked={true}
-                                                       text={bottomBun.name + " (низ)"}
-                                                       price={bottomBun.price}
-                                                       thumbnail={bottomBun.image} />
+                                                       text={lonelyBun.name + " (низ)"}
+                                                       price={lonelyBun.price}
+                                                       thumbnail={lonelyBun.image} />
                     )}
                 </div>
                 <div className={constructorStyle.order + " pt-10 pb-10"}>

@@ -11,7 +11,7 @@ const Modal = ({ children, onClose, header }) => {
 
     useEffect(() => {
         const close = (e) => {
-            e.keyCode === 27 && onClose()
+            e.key === "Escape" && onClose()
         }
         window.addEventListener('keydown', close)
         return () => {
