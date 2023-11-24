@@ -36,10 +36,10 @@ const Modal = ({ children, onClose, header }) => {
         rootModal
         );
 }
-
+// props header is not required because a modal popup can be without header, like the order-details modal
 Modal.propTypes = {
-    children: PropTypes.element,
-    onClose: PropTypes.func,
+    children: PropTypes.element.isRequired,
+    onClose: PropTypes.func.isRequired,
     header: PropTypes.string
 }
 

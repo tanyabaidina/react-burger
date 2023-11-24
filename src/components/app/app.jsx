@@ -50,7 +50,7 @@ function App() {
                                 <IngredientDetails item={currentIngredient}/>
                             </Modal>}
                         {isOrderDetailsModalOpen &&
-                            <Modal onClose={closeOrderModel} header={""}>
+                            <Modal onClose={closeOrderModel} >
                                 <OrderDetails />
                             </Modal>
                         }

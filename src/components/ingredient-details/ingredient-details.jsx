@@ -1,5 +1,3 @@
-import PropTypes from "prop-types";
-
 import detailsStyle from './ingredient-details.module.css';
 import { ingredientType } from "../../helpers/types";
 
