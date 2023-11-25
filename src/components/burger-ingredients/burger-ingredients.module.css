@@ -1,0 +1,47 @@
+.wrapper {
+    display: grid;
+    width: min-content;
+    height: 100%;
+}
+
+.tabs {
+    display: flex;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    height: 65vh;
+}
+
+.menu__wrapper {
+    box-sizing: border-box;
+    overflow-y: scroll;
+}
+
+.menu__wrapper::-webkit-scrollbar {
+    width: 8px;
+}
+
+.menu__wrapper::-webkit-scrollbar-track {
+    background: #2F2F37;
+}
+
+.menu__wrapper::-webkit-scrollbar-thumb {
+    background: #8585AD;
+}
+
+.menu__wrapper::-webkit-scrollbar-thumb:hover {
+    background: #8585AD;
+}
+
+.list {
+    margin: 0;
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(2, 272px);
+    column-gap: 24px;
+    row-gap: 60px;
+    padding-left: 0;
+    justify-content: center;
+}

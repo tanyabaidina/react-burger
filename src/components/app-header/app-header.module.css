@@ -1,0 +1,35 @@
+.header {
+    background-color: #1C1C21;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.nav__wrapper {
+    display: flex;
+    flex-basis: 40%;
+}
+
+.nav {
+    display: flex;
+}
+
+.wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 70%;
+    margin: 0 auto;
+}
+
+.item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.profile__wrapper {
+    display: flex;
+    flex-basis: 40%;
+    justify-content: end;
+}
