@@ -1,0 +1,52 @@
+:root {
+    --alt-border-radius: 40px 40px 40px 40px;
+    --top-border-radius: 88px 88px 40px 40px;
+    --buttom-border-radius: 40px 40px 88px 88px;
+}
+
+.top {
+    --alt-border-radius: 88px 88px 40px 40px;
+}
+
+.bottom {
+    --alt-border-radius: 40px 40px 88px 88px;
+}
+
+.wrapper {
+    width: 100%;
+    min-width: 536px;
+    max-width: 536px;
+    min-height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #2F2F37;
+    border-radius: var(--alt-border-radius);
+}
+
+.wrapper__hover {
+    box-shadow: 0 4px 32px #801AB280, 0 0 8px #3333FF40, 0 0 16px #3333FF40;
+}
+
+.wrapper__warning {
+    /*text-shadow: 0 8px 20px #3333ffa6, 6px 0 20px #3333FF40, 0 0 16px #e633ff8c;*/
+    animation-duration: 800ms;
+    animation-name: warning;
+}
+
+@keyframes warning {
+    from {
+        color: #8585AD;
+        text-shadow: none;
+    }
+
+    50% {
+        color: white !important;
+        text-shadow: 0 8px 20px #3333ffa6, 6px 0 20px #3333FF40, 0 0 16px #e633ff8c;
+    }
+
+    to {
+        color: #8585AD;
+        text-shadow: none;
+    }
+}

@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 import appStyle from './app.module.css';
 import AppHeader from "../app-header/app-header";
 import BurgerIngredients from '../burger-ingredients/burger-ingredients'
@@ -8,10 +10,7 @@ import IngredientDetails from "../ingredient-details/ingredient-details";
 import OrderDetails from "../order-details/order-details";
 import { useModal } from "../../hooks/use-modal";
 
-import { getIngredientsData } from "../../helpers/api";
-
 function App() {
-    const [ingredients, setIngredients] = useState([]);
     const [currentIngredient, setCurrentIngredient] = useState({});
 
     const {isModalOpen: isIngredientDetailsModalOpen,
@@ -22,16 +21,6 @@ function App() {
         openModal: openOrderModal,
         closeModal: closeOrderModel} = useModal(false);
 
-    useEffect(() => {
-        getIngredientsData()
-            .then(res => {
-                setIngredients(res.data)
-            })
-            .catch(err => {
-                console.error(err);
-            });
-    }, []);
-
     const handlerOpenIngredientModal = (item) => {
         setCurrentIngredient(item)
         openIngredientModal();
@@ -40,11 +29,11 @@ function App() {
     return (
         <div>
             <AppHeader />
-            {ingredients.length > 0 &&
+            <DndProvider backend={HTML5Backend}>
                 <main className={appStyle.main}>
                     <div className={appStyle.wrapper}>
-                        <BurgerIngredients ingredients={ingredients} onIngredientClick={handlerOpenIngredientModal}/>
-                        <BurgerConstructor ingredients={ingredients} onClick={openOrderModal}/>
+                        <BurgerIngredients onIngredientClick={handlerOpenIngredientModal}/>
+                        <BurgerConstructor onClick={openOrderModal}/>
                         {isIngredientDetailsModalOpen &&
                             <Modal onClose={closeIngredientModal} header={"Детали ингредиента"}>
                                 <IngredientDetails item={currentIngredient}/>
@@ -56,7 +45,7 @@ function App() {
                         }
                     </div>
                 </main>
-            }
+            </DndProvider>
         </div>
     );
 }

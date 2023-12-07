@@ -1,13 +1,18 @@
-import {
-    GET_INGREDIENTS_REQUEST,
-    GET_INGREDIENTS_SUCCESS,
-    GET_INGREDIENTS_FAILED
-} from "../actions/burger-ingredients";
+import {GET_INGREDIENTS_FAILED, GET_INGREDIENTS_REQUEST, GET_INGREDIENTS_SUCCESS} from "../actions/burger-ingredients";
 
 export const initialState = {
-    ingredients: [],
+    ingredients: {},
     ingredientsRequest: false,
     ingredientsFailed: false
+}
+
+const ingredientsByType = (ingredients) => {
+    return ingredients.reduce((group, item) => {
+        const {type} = item;
+        group[type] = group[type] ?? [];
+        group[type].push(item);
+        return group;
+    }, {});
 }
 
 export const burgerIngredientsReducer = (state = initialState, action) => {
@@ -23,7 +28,7 @@ export const burgerIngredientsReducer = (state = initialState, action) => {
                 ...state,
                 ingredientsRequest: false,
                 ingredientsFailed: false,
-                ingredients: action.ingredients
+                ingredients: ingredientsByType(action.ingredients)
             }
         }
         case GET_INGREDIENTS_FAILED: {

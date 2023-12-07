@@ -11,7 +11,12 @@ export const getIngredientsData = async () => {
 };
 
 export const getOrderDetailsData = async (data: any) => {
-    const response = await axios.post(`${API_URL}/orders`, data);
+    const response = await axios.post(
+        `${API_URL}/orders`,
+        {ingredients: data},
+        {
+            headers: {'Content-Type': 'application/json;charset=utf-8'}
+        });
     if (response.data.success) {
         return response.data;
     } else {

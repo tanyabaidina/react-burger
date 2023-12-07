@@ -1,12 +1,13 @@
+import update from 'immutability-helper'
 import {
     ADD_INGREDIENT,
     ADD_BUN,
     DELETE_INGREDIENT,
-    MOVE_INGREDIENT
+    MOVE_INGREDIENT, CLEAR_CONSTRUCTOR
 } from "../actions/burger-constructor";
 
 export const initialState = {
-    bun: {},
+    bun: null,
     ingredients: []
 }
 
@@ -27,12 +28,25 @@ export const burgerConstructorReducer = (state = initialState, action) => {
         case DELETE_INGREDIENT: {
             return {
                 ...state,
-                ingredients: [...state.ingredients].filter(item => item.id !== action.ingredient._id)
+                ingredients: [...state.ingredients].filter(item => item.uniqId !== action.ingredient.uniqId)
             }
         }
         case MOVE_INGREDIENT: {
             return {
-                ...state
+                ...state,
+                ingredients: update(state.ingredients, {
+                    $splice: [
+                        [action.fromIndex, 1],
+                        [action.toIndex, 0, state.ingredients[action.fromIndex]]
+                    ],
+                })
+            }
+        }
+        case CLEAR_CONSTRUCTOR: {
+            return {
+                ...state,
+                bun: null,
+                ingredients: []
             }
         }
         default: {

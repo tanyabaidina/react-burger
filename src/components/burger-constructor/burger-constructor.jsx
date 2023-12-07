@@ -1,55 +1,106 @@
-import {useMemo} from "react";
+import { useSelector, useDispatch } from "react-redux";
 import PropTypes from "prop-types";
+import { useDrop } from "react-dnd";
+import { v4 as uuidv4 } from 'uuid';
 
 import constructorStyle from './burger-constructor.module.css'
 import { ConstructorElement, CurrencyIcon, Button, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { ingredientType } from "../../helpers/types";
+import ElementDropzone from "./element-dropzone/element-dropzone";
+import {ADD_BUN, ADD_INGREDIENT} from "../../services/actions/burger-constructor";
+import { useEffect, useState } from "react";
+import ConstructorListItem from "./constructor-list-item/constructor-list-item";
+import {getOrderDetails} from "../../services/actions/order-details";
+import {ITEM_TYPES} from "../../helpers/constants";
 
-function BurgerConstructor({ ingredients, onClick }) {
+function BurgerConstructor({ onClick }) {
+    const { bun, ingredients } = useSelector(store => store.burgerConstructor);
+    const dispatch = useDispatch();
+    const [totalPrice, setTotalPrice] = useState(0);
+    const [warning, setWarning] = useState(false);
 
-    const buns = useMemo(() => ingredients.filter(item => item.type === "bun"), [ingredients]);
-    const mains = useMemo(() => ingredients.filter(item => item.type === "main"), [ingredients]);
-    const sauces = useMemo(() => ingredients.filter(item => item.type === "sauce"), [ingredients]);
+    useEffect(() => {
+        const pricesArray = [...[bun, bun], ...ingredients].map( item => item?.price );
+        const _totalPrice  = pricesArray.reduce((prev, cur) => {
+            return prev + cur
+        }, 0) || 0;
+        setTotalPrice(_totalPrice);
+    }, [bun, ingredients]);
 
-    const lonelyBun = buns[0];
+    const [{ isBunHover }, dropBun] = useDrop(() => ({
+        accept: ITEM_TYPES.BUN,
+        drop: (item) => {
+            dispatch({
+                type: ADD_BUN,
+                bun: item
+            })
+        },
+        collect: (monitor) => ({
+            isBunHover: monitor.isOver(),
+        }),
+    }))
 
-    const otherIngredients = [mains[1], mains[0], mains[3], mains[5], mains[6], sauces[0]];
+    const [{ isHover }, drop] = useDrop(() => ({
+        accept: ITEM_TYPES.INGREDIENT,
+        drop: (item) => {
+            dispatch({
+                type: ADD_INGREDIENT,
+                ingredient: { ...item, count: item.count += 1, uniqId: uuidv4()}
+            })
+        },
+        collect: (monitor) => ({
+            isHover: monitor.isOver(),
+        }),
+    }))
+
+    const orderHandler = () => {
+        if ( bun && ingredients.length > 0) {
+            const data = [bun, ...ingredients, bun].map(item => item?._id);
+            dispatch(getOrderDetails(data));
+            onClick();
+        } else {
+            setWarning(true)
+            setTimeout(() => {setWarning(false)}, 800);
+        }
+    }
 
     return (
         <section className={constructorStyle.wrapper + " pr-5 pl-5"}>
-            <div className={"pl-4 pr-8 pt-25"}>
-                <div className={"pl-8 pt-4 pb-4"}>
-                    {lonelyBun && (<ConstructorElement type="top"
-                                                    isLocked={true}
-                                                    text={lonelyBun.name + " (верх)"}
-                                                    price={lonelyBun.price}
-                                                    thumbnail={lonelyBun.image} />
-                    )}
+            <div className={"pl-4 pr-8 pt-25"} ref={dropBun}>
+                <div className={"pl-8 pt-4 pb-2"} >
+                    {bun ?
+                        <ConstructorElement type="top"
+                                            isLocked={true}
+                                            text={bun.name + " (верх)"}
+                                            price={bun.price}
+                                            thumbnail={bun.image}
+                                            extraClass={isBunHover ? constructorStyle.wrapper__hover : ""}/> :
+                        <ElementDropzone type="top" text={'Выберете булку'} isHover={isBunHover} warning={warning}/>
+                    }
                 </div>
-                <div className={constructorStyle.items__wrapper}>
-                    <ul className={constructorStyle.list + " pr-4 "}>
-                        {otherIngredients.length > 0 && otherIngredients.map((item) => (
-                            <li className={constructorStyle.item} key={item._id}>
-                                <DragIcon type="primary"/>
-                                <ConstructorElement text={item.name}
-                                                    price={item.price}
-                                                    thumbnail={item.image} />
-                            </li>
-                        ))}
+                <div className={constructorStyle.items__wrapper + " pt-2 pb-2 pr-2"} ref={drop}>
+                    <ul className={constructorStyle.list}>
+                        {ingredients.length > 0 ? ingredients.map((item, index) => (
+                            <ConstructorListItem item={item}
+                                                 index={index}
+                                                 isHover={isHover}
+                                                 key={item.uniqId}/>
+                        )) : <ElementDropzone type="" text={'Выберете начинку'} isHover={isHover} warning={warning}/> }
                     </ul>
                 </div>
-                <div className={"pl-8 pt-4 pb-4"}>
-                    {lonelyBun && (<ConstructorElement type="bottom"
-                                                       isLocked={true}
-                                                       text={lonelyBun.name + " (низ)"}
-                                                       price={lonelyBun.price}
-                                                       thumbnail={lonelyBun.image} />
-                    )}
+                <div className={"pl-8 pt-2 pb-4"} >
+                    { bun ? <ConstructorElement type="bottom"
+                                                isLocked={true}
+                                                text={bun.name + " (низ)"}
+                                                price={bun.price}
+                                                thumbnail={bun.image}
+                                                extraClass={isBunHover ? constructorStyle.wrapper__hover : ""}/> :
+                        <ElementDropzone type="bottom" text={'Выберете булку'} isHover={isBunHover} warning={warning}/>
+                    }
                 </div>
                 <div className={constructorStyle.order + " pt-10 pb-10"}>
-                    <p className="text text_type_digits-medium pr-1">800</p>
+                    <p className="text text_type_digits-medium pr-1">{totalPrice}</p>
                     <CurrencyIcon type="primary"/>
-                    <Button htmlType="button" type="primary" size="medium" extraClass="ml-10 mr-4" onClick={onClick}>
+                    <Button htmlType="button" type="primary" size="medium" extraClass="ml-10 mr-4" onClick={orderHandler}>
                         Оформить заказ
                     </Button>
                 </div>
@@ -59,7 +110,6 @@ function BurgerConstructor({ ingredients, onClick }) {
 }
 
 BurgerConstructor.propTypes = {
-    ingredients: PropTypes.arrayOf(ingredientType).isRequired,
     onClick: PropTypes.func.isRequired
 };
 
