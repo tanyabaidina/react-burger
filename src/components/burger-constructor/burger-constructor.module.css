@@ -4,6 +4,10 @@
     height: 100%;
 }
 
+.wrapper__hover {
+    box-shadow: 0 4px 32px #801AB280, 0 0 8px #3333FF40, 0 0 16px #3333FF40;
+}
+
 .list {
     display: flex;
     flex-direction: column;
@@ -22,8 +26,8 @@
 
 .items__wrapper {
     box-sizing: border-box;
-    overflow-y: scroll;
-    height: 368px;
+    overflow-y: auto;
+    max-height: 384px;
 }
 
 .items__wrapper::-webkit-scrollbar {
