@@ -18,9 +18,9 @@ function BurgerIngredients({ onIngredientClick }) {
     const mainsRef = useRef(null);
     const tabsRef = useRef(null)
 
-    useEffect(() => {
+    /*useEffect(() => {
         dispatch(getIngredients())
-    }, [dispatch]);
+    }, [dispatch]);*/
 
     const scrollHandler = () => {
         const elementBoundsArray = [

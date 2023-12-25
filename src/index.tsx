@@ -1,11 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { configureStore } from "@reduxjs/toolkit";
+import {Provider} from "react-redux";
+import { BrowserRouter } from 'react-router-dom';
 
 import './index.css';
 import App from './components/app/app';
 import { rootReducer } from "./services/reducers/root-reducer";
-import {Provider} from "react-redux";
+
 
 const store = configureStore({
     reducer: rootReducer,
@@ -18,7 +20,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
       <Provider store={store} >
-        <App />
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
       </Provider>
   </React.StrictMode>
 );
