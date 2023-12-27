@@ -66,7 +66,6 @@ function App() {
                         <Route path={"/register"} element={<UnAuthProtected component={ <RegisterPage />} />} />
                         <Route path={"/forgot-password"} element={<UnAuthProtected component={ <ForgotPasswordPage />}/>} />
                         <Route path={"/reset-password"} element={<UnAuthProtected checkStep={true}
-                                                                                  routTo={"/forgot-password"}
                                                                                   component={<ResetPasswordPage />} />} />
                         <Route path={"/profile"} element={<AuthProtected component={<AccountPage />} />}>
                             <Route path={"/profile"} element={<ProfilePage />} />

@@ -43,14 +43,13 @@ function LoganPage() {
                     value={form.email || ""}
                     placeholder="Логин"
                     isIcon={false}
-                    extraClass="mb-2"
                 />
                 <PasswordInput
                     name={'password'}
                     onChange={handleFormChange}
                     value={form.password || ""}
                 />
-                <Button htmlType="submit" type="primary" size="medium" extraClass="ml-10 mr-4">
+                <Button htmlType="submit" type="primary" size="medium">
                     Войти
                 </Button>
                 {error !== "" && <p className={`text text_type_main-default ${loginStyle.error}`}>{error}</p> }

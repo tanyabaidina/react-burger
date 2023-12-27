@@ -61,7 +61,7 @@ function RegisterPage() {
                     name={'password'}
                     placeholder="Пароль"
                 />
-                <Button htmlType="submit" type="primary" size="medium" extraClass="ml-10 mr-4">
+                <Button htmlType="submit" type="primary" size="medium">
                     Зарегистрироваться
                 </Button>
                 {error !== "" && <p className={`text text_type_main-default ${loginStyle.error}`}>{error}</p> }

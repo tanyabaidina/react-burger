@@ -1,17 +1,17 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
 import loginStyle from "./account.module.css"
 import { Button, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import { resetPassword } from "../services/actions/account/reset-password";
+import {useForm} from "../hooks/use-form";
 
 function ResetPasswordPage() {
     const { resetPasswordSuccess } =  useSelector((store) => store.userData);
-    const [password, setPassword] = useState("");
-    const [token, setToken] = useState("");
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const { form, isValid, formChange } = useForm({});
 
     useEffect(() => {
         if (resetPasswordSuccess) {
@@ -20,10 +20,13 @@ function ResetPasswordPage() {
     }, [resetPasswordSuccess]);
     const sendResetPassword = (e) => {
         e.preventDefault();
-        if (password === "" || token === "") {
+        if (!isValid()) {
             return;
         }
-        dispatch(resetPassword({password, token}));
+        dispatch(resetPassword({
+            password: form.password,
+            token: form.token
+        }));
     }
 
     return (
@@ -31,22 +34,21 @@ function ResetPasswordPage() {
             <form className={loginStyle.wrapper} onSubmit={sendResetPassword}>
                 <h3 className='text text_type_main-medium'>Восстановление пароля</h3>
                 <PasswordInput
-                    onChange={(e) => {
-                        setPassword(e.target.value)
-                    }}
-                    value={password}
+                    name={'password'}
+                    onChange={formChange}
+                    value={form.password || ""}
                     placeholder="Введите новый пароль"
 
                 />
                 <Input
+                    name={"token"}
                     type={'text'}
                     placeholder={'Введите код из письма'}
-                    value={token}
-                    onChange={(e) => {
-                        setToken(e.target.value)}}
+                    value={form.token || ""}
+                    onChange={formChange}
                     size={'default'}
                 />
-                <Button htmlType="submit" type="primary" size="medium" extraClass="ml-10 mr-4">
+                <Button htmlType="submit" type="primary" size="medium">
                     Сохранить
                 </Button>
                 <div className={loginStyle.footer}>

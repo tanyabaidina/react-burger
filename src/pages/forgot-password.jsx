@@ -38,7 +38,7 @@ function ForgotPasswordPage() {
                     isIcon={false}
                     extraClass="mb-2"
                 />
-                <Button htmlType="submit" type="primary" size="medium" extraClass="ml-10 mr-4">
+                <Button htmlType="submit" type="primary" size="medium">
                     Восстановить
                 </Button>
                 <div className={loginStyle.footer}>
