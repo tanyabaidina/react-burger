@@ -18,10 +18,8 @@ export const getOrderDetails = (data) => {
         dispatch(requestAction());
         getOrderDetailsData(data)
             .then((response) => {
-                setTimeout( () => {
                     dispatch(successAction(response.order.number))
-                    dispatch(clearConstructorAction())},
-                    10000)
+                    dispatch(clearConstructorAction())
             })
             .catch(() => {
                 dispatch(failedAction())
