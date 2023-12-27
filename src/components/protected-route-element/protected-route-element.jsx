@@ -3,12 +3,12 @@ import { Navigate, useLocation } from "react-router-dom";
 import PropTypes from 'prop-types';
 
 
-const ProtectedComponent = ({ onlyUnAuth = false, component }) => {
+const ProtectedComponent = ({ onlyUnAuth = false, component, checkStep=false, routTo }) => {
     const location = useLocation();
-    const isAuth =  useSelector((store) => store.userData.isAuth);
+    const { requestAuth, isAuth, forgotPasswordSuccess } =  useSelector((store) => store.userData);
     const startPage = location.state?.from?.pathname || '/';
 
-    if (!isAuth)
+    if (requestAuth && !isAuth)
         return null;
 
     if (onlyUnAuth && isAuth) {
@@ -19,15 +19,21 @@ const ProtectedComponent = ({ onlyUnAuth = false, component }) => {
         return <Navigate to={"/login"} state={{ from: location }} replace/>;
     }
 
+    if (onlyUnAuth && checkStep && !isAuth && !forgotPasswordSuccess) {
+        return <Navigate to={startPage} state={{ from: location }} replace/>;
+    }
+
     return component;
 }
 
 ProtectedComponent.propTypes = {
     onlyUnAuth: PropTypes.bool,
-    component: PropTypes.element.isRequired
+    component: PropTypes.element.isRequired,
+    checkStep: PropTypes.bool,
+    routTo: PropTypes.string
 };
 
 export const AuthProtected = ProtectedComponent;
-export const UnAuthProtected = ({ component }) => (
-    <ProtectedComponent onlyUnAuth={true} component={component} />
+export const UnAuthProtected = ({ component, checkStep, routTo }) => (
+    <ProtectedComponent onlyUnAuth={true} component={component} routTo={routTo} checkStep={checkStep} />
 );

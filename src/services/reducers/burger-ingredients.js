@@ -1,9 +1,15 @@
-import {GET_INGREDIENTS_FAILED, GET_INGREDIENTS_REQUEST, GET_INGREDIENTS_SUCCESS} from "../actions/burger-ingredients";
+import {
+    GET_INGREDIENTS_FAILED,
+    GET_INGREDIENTS_REQUEST,
+    GET_INGREDIENTS_SUCCESS,
+    SET_CURRENT_INGREDIENT
+} from "../actions/burger-ingredients";
 
 export const initialState = {
     ingredients: {},
     ingredientsRequest: false,
-    ingredientsFailed: false
+    ingredientsFailed: false,
+    currentIngredient: null
 }
 
 const ingredientsByType = (ingredients) => {
@@ -36,6 +42,12 @@ export const burgerIngredientsReducer = (state = initialState, action) => {
                 ...state,
                 ingredientsRequest: false,
                 ingredientsFailed: true
+            }
+        }
+        case SET_CURRENT_INGREDIENT: {
+            return {
+                ...state,
+                currentIngredient: action.currentIngredient
             }
         }
         default: {

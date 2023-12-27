@@ -1,15 +1,23 @@
+import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
 import loginStyle from "./account.module.css"
-import {Button, EmailInput} from "@ya.praktikum/react-developer-burger-ui-components";
-import {Link} from "react-router-dom";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { Button, EmailInput } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import { forgotPassword } from "../services/actions/account/forgot-password";
 
-
 function ForgotPasswordPage() {
+    const { forgotPasswordSuccess } =  useSelector((store) => store.userData);
     const [email, setEmail] = useState("");
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (forgotPasswordSuccess) {
+            navigate("/reset-password");
+        }
+    }, [forgotPasswordSuccess]);
 
     const sendForgotPassword = (e) => {
         e.preventDefault();

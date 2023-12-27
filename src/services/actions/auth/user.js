@@ -1,4 +1,5 @@
-import {getUserData, patchUserData} from "../../../helpers/api";
+import { getUserData, patchUserData } from "../../../helpers/api";
+import { actionCreator, actionPayloadCreator } from "../helper";
 
 export const USER_REQUEST = "USER_REQUEST";
 export const USER_SUCCESS = "USER_SUCCESS";
@@ -8,42 +9,36 @@ export const UPDATE_USER_REQUEST = "UPDATE_USER_REQUEST";
 export const UPDATE_USER_SUCCESS = "UPDATE_USER_SUCCESS";
 export const UPDATE_USER_FAILED = "UPDATE_USER_FAILED";
 
+const requestAction = () => actionCreator(USER_REQUEST);
+const successAction = (payload) => actionPayloadCreator(USER_SUCCESS, payload);
+const failedAction = () => actionCreator(USER_FAILED);
+
+const requestUpdateUserAction = () => actionCreator(UPDATE_USER_REQUEST);
+const successUpdateUserAction = (payload) => actionPayloadCreator(UPDATE_USER_SUCCESS, payload);
+const failedUpdateUserAction = () => actionCreator(UPDATE_USER_FAILED);
+
 export const userData = () => {
     return (dispatch) => {
-        dispatch({
-            type: USER_REQUEST
-        });
+        dispatch(requestAction());
         getUserData()
             .then((response) => {
-                dispatch({
-                    type: USER_SUCCESS,
-                    payload: response.data.user
-                })
+                dispatch(successAction(response.data.user))
             })
             .catch(() => {
-                dispatch({
-                    type: USER_FAILED
-                })
+                dispatch(failedAction())
             })
     }
 }
 
 export const updateUserData = (data) => {
     return (dispatch) => {
-        dispatch({
-            type: UPDATE_USER_REQUEST
-        });
+        dispatch(requestUpdateUserAction());
         patchUserData(data)
             .then((response) => {
-                dispatch({
-                    type: UPDATE_USER_SUCCESS,
-                    payload: response.data.user
-                })
+                dispatch(successUpdateUserAction(response.data.user))
             })
             .catch(() => {
-                dispatch({
-                    type: UPDATE_USER_FAILED
-                })
+                dispatch(failedUpdateUserAction())
             })
     }
 }

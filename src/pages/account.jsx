@@ -1,5 +1,5 @@
-import {NavLink, Outlet} from "react-router-dom";
-import {useDispatch} from "react-redux";
+import { NavLink, Outlet } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 import AccountStyle from "./account.module.css";
 import { userLogout } from "../services/actions/auth/logout";

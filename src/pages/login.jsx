@@ -1,44 +1,59 @@
-import {PasswordInput, Button, EmailInput} from "@ya.praktikum/react-developer-burger-ui-components";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useForm } from "../hooks/use-form";
+import { Link } from "react-router-dom";
 
+import {PasswordInput, Button, EmailInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import loginStyle from "./account.module.css"
-import {Link} from "react-router-dom";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
 import { loginUser } from "../services/actions/auth/login";
 
 function LoganPage() {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-
+    const { loginError } =  useSelector((store) => store.userData);
+    const [error, setError] = useState("");
+    const { form, formChange, isValid } = useForm({});
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        setError(loginError)
+    }, [loginError]);
+
+    const handleFormChange = (e) => {
+        formChange(e)
+        setError("")
+    }
 
     const sendLogin = (e) => {
         e.preventDefault();
-        if (email === "" || password === "") {
+        if (!isValid()) {
             return;
         }
-        dispatch(loginUser({ email, password }));
+        dispatch(loginUser({
+            email: form.email,
+            password: form.password
+        }));
     }
-
 
     return (
         <div>
             <form className={loginStyle.wrapper} onSubmit={sendLogin}>
                 <h3 className='text text_type_main-medium'>Вход</h3>
                 <EmailInput
-                    onChange={(e) => {setEmail(e.target.value)}}
-                    value={email}
+                    name={"email"}
+                    onChange={handleFormChange}
+                    value={form.email || ""}
                     placeholder="Логин"
                     isIcon={false}
                     extraClass="mb-2"
                 />
                 <PasswordInput
-                    onChange={(e) => {setPassword(e.target.value)}}
-                    value={password}
+                    name={'password'}
+                    onChange={handleFormChange}
+                    value={form.password || ""}
                 />
                 <Button htmlType="submit" type="primary" size="medium" extraClass="ml-10 mr-4">
                     Войти
                 </Button>
+                {error !== "" && <p className={`text text_type_main-default ${loginStyle.error}`}>{error}</p> }
                 <div className={loginStyle.footer}>
                     <div className={loginStyle.text}>
                         <p className="text text_type_main-default text_color_inactive">Вы — новый пользователь?</p>

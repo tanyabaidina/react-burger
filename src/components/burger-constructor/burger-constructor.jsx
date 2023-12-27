@@ -1,22 +1,28 @@
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import PropTypes from "prop-types";
 import { useDrop } from "react-dnd";
-import { v4 as uuidv4 } from 'uuid';
+import { useNavigate } from "react-router-dom";
 
 import constructorStyle from './burger-constructor.module.css'
-import { ConstructorElement, CurrencyIcon, Button, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { ConstructorElement, CurrencyIcon, Button} from '@ya.praktikum/react-developer-burger-ui-components';
+
+import PropTypes from "prop-types";
+
+import { v4 as uuidv4 } from 'uuid';
+import { addBunAction, addIngredientAction } from "../../services/actions/burger-constructor";
+import { getOrderDetails } from "../../services/actions/order-details";
+import { ITEM_TYPES } from "../../helpers/constants";
+
 import ElementDropzone from "./element-dropzone/element-dropzone";
-import {ADD_BUN, ADD_INGREDIENT} from "../../services/actions/burger-constructor";
-import { useEffect, useState } from "react";
 import ConstructorListItem from "./constructor-list-item/constructor-list-item";
-import {getOrderDetails} from "../../services/actions/order-details";
-import {ITEM_TYPES} from "../../helpers/constants";
 
 function BurgerConstructor({ onClick }) {
     const { bun, ingredients } = useSelector(store => store.burgerConstructor);
     const dispatch = useDispatch();
     const [totalPrice, setTotalPrice] = useState(0);
     const [warning, setWarning] = useState(false);
+    const navigate = useNavigate();
+    const isAuth =  useSelector((store) => store.userData.isAuth);
 
     useEffect(() => {
         const pricesArray = [...[bun, bun], ...ingredients].map( item => item?.price );
@@ -29,10 +35,7 @@ function BurgerConstructor({ onClick }) {
     const [{ isBunHover }, dropBun] = useDrop(() => ({
         accept: ITEM_TYPES.BUN,
         drop: (item) => {
-            dispatch({
-                type: ADD_BUN,
-                bun: item
-            })
+            dispatch(addBunAction(item))
         },
         collect: (monitor) => ({
             isBunHover: monitor.isOver(),
@@ -42,10 +45,7 @@ function BurgerConstructor({ onClick }) {
     const [{ isHover }, drop] = useDrop(() => ({
         accept: ITEM_TYPES.INGREDIENT,
         drop: (item) => {
-            dispatch({
-                type: ADD_INGREDIENT,
-                ingredient: { ...item, count: item.count += 1, uniqId: uuidv4()}
-            })
+            dispatch(addIngredientAction({ ...item, count: item.count += 1, uniqId: uuidv4()}))
         },
         collect: (monitor) => ({
             isHover: monitor.isOver(),
@@ -53,13 +53,20 @@ function BurgerConstructor({ onClick }) {
     }))
 
     const orderHandler = () => {
-        if ( bun && ingredients.length > 0) {
-            const data = [bun, ...ingredients, bun].map(item => item?._id);
-            dispatch(getOrderDetails(data));
-            onClick();
+        if (isAuth) {
+            if (bun && ingredients.length > 0) {
+                navigate("/orders");
+                const data = [bun, ...ingredients, bun].map(item => item?._id);
+                dispatch(getOrderDetails(data));
+                onClick();
+            } else {
+                setWarning(true)
+                setTimeout(() => {
+                    setWarning(false)
+                }, 800);
+            }
         } else {
-            setWarning(true)
-            setTimeout(() => {setWarning(false)}, 800);
+            navigate("/login");
         }
     }
 

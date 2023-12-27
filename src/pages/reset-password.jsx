@@ -1,15 +1,23 @@
-import loginStyle from "./account.module.css"
-import {Button, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
-import {Link} from "react-router-dom";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 
+import loginStyle from "./account.module.css"
+import { Button, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import { resetPassword } from "../services/actions/account/reset-password";
 
 function ResetPasswordPage() {
+    const { resetPasswordSuccess } =  useSelector((store) => store.userData);
     const [password, setPassword] = useState("");
     const [token, setToken] = useState("");
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (resetPasswordSuccess) {
+            navigate("/login");
+        }
+    }, [resetPasswordSuccess]);
     const sendResetPassword = (e) => {
         e.preventDefault();
         if (password === "" || token === "") {

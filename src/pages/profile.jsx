@@ -1,9 +1,10 @@
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { useForm } from "../hooks/use-form";
+
 import {Button, EmailInput, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import loginStyle from "./account.module.css";
-import {useDispatch, useSelector} from "react-redux";
-import {useEffect, useState} from "react";
-import {useForm} from "../hooks/use-form";
-import {updateUserData} from "../services/actions/auth/user";
+import { updateUserData } from "../services/actions/auth/user";
 
 function ProfilePage() {
     const { name, email } =  useSelector((store) => store.userData);
@@ -31,9 +32,10 @@ function ProfilePage() {
             email: form.email,
             password: form.password
         }))
+        setVisibleButtons(false)
     }
 
-    const removeChanges = (e) => {
+    const removeChanges = () => {
         updateForm({
             name: name,
             email: email,

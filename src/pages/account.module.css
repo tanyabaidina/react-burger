@@ -45,7 +45,8 @@
 }
 
 .account__wrapper {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
     width: 67%;
     margin-top: 14vh;
 }
@@ -67,4 +68,8 @@
 
 .profile__buttons {
     align-self: end;
+}
+
+.error {
+    color: var(--colors-interface-error)
 }

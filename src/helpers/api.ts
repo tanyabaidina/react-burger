@@ -1,6 +1,6 @@
 import axios from 'axios';
-import {API_URL} from "./constants";
-import {ACCESS_TOKEN, getToken, REFRESH_TOKEN, removeToken, setToken} from "./tokens";
+import { API_URL } from "./constants";
+import { ACCESS_TOKEN, getToken, REFRESH_TOKEN, removeToken, setToken } from "./tokens";
 
 const authApi = axios.create({
     baseURL: `${API_URL}/auth`,
@@ -78,7 +78,7 @@ export const getIngredientsData = async () => {
 };
 
 export const getOrderDetailsData = async (data: any) => {
-    await postRequest(`${API_URL}/orders`, {ingredients: data});
+    return await postRequest(`${API_URL}/orders`, {ingredients: data});
 }
 
 export const sendForgotPassword = async (data: any) => {
@@ -98,7 +98,7 @@ export const sendLogout = async() => {
 }
 
 export const sendRegister = async (data:any)=> {
-    await postRequest(`${API_URL}/auth/register`, data).then(saveTokens);
+    return await postRequest(`${API_URL}/auth/register`, data).then(saveTokens);
 }
 
 export const refreshAccessToken = async() => {

@@ -1,4 +1,4 @@
-import {useState} from "react";
+import { useState } from "react";
 
 export const useForm = (formValues = {}) => {
     const [form, updateForm] = useState(formValues);
@@ -8,5 +8,12 @@ export const useForm = (formValues = {}) => {
         updateForm({...form, [name]: value});
     }
 
-    return { form, updateForm, formChange };
+    const isValid = () => {
+        for (const [key, value] of Object.entries(form)) {
+            if (value === "") return false
+        }
+        return true;
+    }
+
+    return { form, updateForm, formChange, isValid };
 }
