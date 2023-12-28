@@ -35,13 +35,9 @@ function App() {
         dispatch(userData());
     }, [dispatch])
 
-    const {isModalOpen: isIngredientDetailsModalOpen,
-        openModal: openIngredientModal,
-        closeModal: closeIngredientModal} = useModal(false);
+    const { closeModal: closeIngredientModal} = useModal(false);
 
-    const {isModalOpen: isOrderDetailsModalOpen,
-        openModal: openOrderModal,
-        closeModal: closeOrderModel} = useModal(false);
+    const { openModal: openOrderModal, closeModal: closeOrderModel} = useModal(false);
 
     const handleDetailsModalClose = () => {
         closeIngredientModal();
