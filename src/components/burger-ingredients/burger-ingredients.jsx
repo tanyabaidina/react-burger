@@ -1,26 +1,20 @@
-import { useState, useEffect, useRef } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import PropTypes from 'prop-types';
+import { useState, useRef } from "react";
+import { useSelector } from "react-redux";
 
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import ingredientsStyle from './burger-ingredients.module.css'
-import IngredientElement from "../ingredient-element/ingredient-element";
-import {ITEM_TYPES, TABS} from "../../helpers/constants";
-import { getIngredients } from "../../services/actions/burger-ingredients";
 
-function BurgerIngredients({ onIngredientClick }) {
+import IngredientElement from "../ingredient-element/ingredient-element";
+import { ITEM_TYPES, TABS } from "../../helpers/constants";
+
+function BurgerIngredients() {
     const { ingredients, ingredientsRequest } = useSelector(store => store.burgerIngredients);
-    const dispatch = useDispatch();
     const [activeTab, setActiveTab] = useState(TABS.BUNS);
 
     const bunsRef = useRef(null);
     const saucesRef = useRef(null);
     const mainsRef = useRef(null);
     const tabsRef = useRef(null)
-
-    useEffect(() => {
-        dispatch(getIngredients())
-    }, [dispatch]);
 
     const scrollHandler = () => {
         const elementBoundsArray = [
@@ -61,7 +55,7 @@ function BurgerIngredients({ onIngredientClick }) {
                         <ul className={ingredientsStyle.list + " pt-6 pb-15"} >
                             {ingredients.bun?.length && ingredients.bun.map((item) => (
                                 <li key={item._id}>
-                                    <IngredientElement item={item} onClick={onIngredientClick} type={ITEM_TYPES.BUN}/>
+                                    <IngredientElement item={item} type={ITEM_TYPES.BUN}/>
                                 </li>
                                 ))}
                         </ul>
@@ -71,7 +65,7 @@ function BurgerIngredients({ onIngredientClick }) {
                         <ul className={ingredientsStyle.list + " pt-6 pb-15"} >
                             {ingredients.sauce?.length && ingredients.sauce.map((item) => (
                                 <li key={item._id}>
-                                    <IngredientElement item={item} onClick={onIngredientClick} type={ITEM_TYPES.INGREDIENT} />
+                                    <IngredientElement item={item} type={ITEM_TYPES.INGREDIENT} />
                                 </li>
                                 ))}
                         </ul>
@@ -81,7 +75,7 @@ function BurgerIngredients({ onIngredientClick }) {
                         <ul className={ingredientsStyle.list + " pt-6 pb-15"} >
                             {ingredients.main?.length && ingredients.main.map((item) => (
                                 <li key={item._id}>
-                                    <IngredientElement item={item} onClick={onIngredientClick} type={ITEM_TYPES.INGREDIENT} />
+                                    <IngredientElement item={item} type={ITEM_TYPES.INGREDIENT} />
                                 </li>
                                 ))}
                         </ul>
@@ -91,9 +85,5 @@ function BurgerIngredients({ onIngredientClick }) {
         </section>
     )
 }
-
-BurgerIngredients.propTypes = {
-    onIngredientClick: PropTypes.func.isRequired
-};
 
 export default BurgerIngredients;

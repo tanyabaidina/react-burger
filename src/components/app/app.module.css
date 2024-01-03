@@ -2,9 +2,11 @@
   display: flex;
   width: 100%;
   justify-content: center;
+  height: 100%;
 }
 
 .main {
   display: block;
   width: 100%;
+  height: calc(100vh - 88px);
 }

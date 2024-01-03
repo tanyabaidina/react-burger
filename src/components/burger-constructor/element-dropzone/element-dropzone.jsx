@@ -24,7 +24,8 @@ const ElementDropzone = ({type, text, isHover, warning}) => {
 ElementDropzone.propTypes = {
     type: PropTypes.string.isRequired,
     text: PropTypes.string.isRequired,
-    isHover: PropTypes.bool.isRequired
+    isHover: PropTypes.bool.isRequired,
+    warning: PropTypes.bool
 }
 
 export default ElementDropzone;

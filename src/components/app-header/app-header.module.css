@@ -33,3 +33,12 @@
     flex-basis: 40%;
     justify-content: end;
 }
+
+.link {
+    display: flex;
+    text-decoration: none;
+}
+
+.active {
+    color: white;
+}

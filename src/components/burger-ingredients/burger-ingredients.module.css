@@ -1,7 +1,7 @@
 .wrapper {
     display: grid;
     width: min-content;
-    height: 100%;
+    height: calc(100% - 40px);
 }
 
 .tabs {

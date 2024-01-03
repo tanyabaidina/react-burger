@@ -22,3 +22,8 @@
     margin: 0;
     text-align: center;
 }
+
+.link {
+    text-decoration: none;
+    color: #F2F2F3;
+}

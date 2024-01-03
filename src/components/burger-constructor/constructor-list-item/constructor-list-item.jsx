@@ -4,11 +4,13 @@ import { useDispatch } from "react-redux";
 import PropTypes from "prop-types";
 
 import constructorStyle from "../burger-constructor.module.css";
-import {ConstructorElement, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import {DELETE_INGREDIENT, MOVE_INGREDIENT} from "../../../services/actions/burger-constructor";
-
-import {ingredientType} from "../../../helpers/types";
-import {ITEM_TYPES} from "../../../helpers/constants";
+import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import {
+    deleteIngredientAction,
+    moveIngredientAction
+} from "../../../services/actions/burger-constructor";
+import { ingredientType } from "../../../helpers/types";
+import { ITEM_TYPES } from "../../../helpers/constants";
 
 function ConstructorListItem({ item, index, isHover }) {
     const dispatch = useDispatch();
@@ -25,20 +27,13 @@ function ConstructorListItem({ item, index, isHover }) {
             if (!item || item.index === index) {
                 return;
             }
-            dispatch({
-                type: MOVE_INGREDIENT,
-                fromIndex: item.index,
-                toIndex: index
-            });
+            dispatch(moveIngredientAction({from: item.index, to: index}));
             item.index = index;
         },
     })
 
     const deleteIngredient = () => {
-        dispatch({
-            type: DELETE_INGREDIENT,
-            ingredient: item
-        })
+        dispatch(deleteIngredientAction(item))
     }
     itemDrag(itemDrop(ref))
 

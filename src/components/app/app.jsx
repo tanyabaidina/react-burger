@@ -1,51 +1,98 @@
-import { useState, useEffect } from 'react';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useEffect } from 'react';
+
 import appStyle from './app.module.css';
-import AppHeader from "../app-header/app-header";
-import BurgerIngredients from '../burger-ingredients/burger-ingredients'
-import BurgerConstructor from '../burger-constructor/burger-constructor';
-import Modal from "../modal/modal";
+
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import OrderDetails from "../order-details/order-details";
+import AppHeader from "../app-header/app-header";
+import Modal from "../modal/modal";
+
+import LoganPage from "../../pages/login";
+import MainPage from "../../pages/main";
+import RegisterPage from "../../pages/register";
+import ForgotPasswordPage from "../../pages/forgot-password";
+import ResetPasswordPage from "../../pages/reset-password";
+import ProfilePage from "../../pages/profile";
+import AccountPage from "../../pages/account";
+import OrdersHistoryPage from "../../pages/orders-history";
+import FourZeroFourPage from "../../pages/four-zero-four";
+
+import { AuthProtected, UnAuthProtected } from "../protected-route-element/protected-route-element";
+import { getIngredients } from "../../services/actions/burger-ingredients";
+import { userData } from "../../services/actions/auth/user";
 import { useModal } from "../../hooks/use-modal";
 
+
 function App() {
-    const [currentIngredient, setCurrentIngredient] = useState({});
+    const dispatch = useDispatch();
+    const location = useLocation();
+    const navigate = useNavigate();
 
-    const {isModalOpen: isIngredientDetailsModalOpen,
-        openModal: openIngredientModal,
-        closeModal: closeIngredientModal} = useModal(false);
+    useEffect(() => {
+        dispatch(getIngredients());
+        dispatch(userData());
+    }, [dispatch])
 
-    const {isModalOpen: isOrderDetailsModalOpen,
-        openModal: openOrderModal,
-        closeModal: closeOrderModel} = useModal(false);
+    const { closeModal: closeIngredientModal} = useModal(false);
 
-    const handlerOpenIngredientModal = (item) => {
-        setCurrentIngredient(item)
-        openIngredientModal();
+    const { openModal: openOrderModal, closeModal: closeOrderModel} = useModal(false);
+
+    const handleDetailsModalClose = () => {
+        closeIngredientModal();
+        navigate(-1);
     }
+
+    const handleOrderModalClose = () => {
+        closeOrderModel();
+        navigate(-1);
+    }
+
+    const background = location.state && location.state.background;
 
     return (
         <div>
             <AppHeader />
-            <DndProvider backend={HTML5Backend}>
-                <main className={appStyle.main}>
-                    <div className={appStyle.wrapper}>
-                        <BurgerIngredients onIngredientClick={handlerOpenIngredientModal}/>
-                        <BurgerConstructor onClick={openOrderModal}/>
-                        {isIngredientDetailsModalOpen &&
-                            <Modal onClose={closeIngredientModal} header={"Детали ингредиента"}>
-                                <IngredientDetails item={currentIngredient}/>
-                            </Modal>}
-                        {isOrderDetailsModalOpen &&
-                            <Modal onClose={closeOrderModel} >
-                                <OrderDetails />
-                            </Modal>
-                        }
-                    </div>
-                </main>
-            </DndProvider>
+            <main className={appStyle.main}>
+                <div className={appStyle.wrapper}>
+                    <Routes>
+                        <Route path={"/login"} element={<UnAuthProtected component={<LoganPage />} />} />
+                        <Route path={"/"} element={<MainPage openOrderModal={openOrderModal}/>} />
+                        <Route path={"/register"} element={<UnAuthProtected component={ <RegisterPage />} />} />
+                        <Route path={"/forgot-password"} element={<UnAuthProtected component={ <ForgotPasswordPage />}/>} />
+                        <Route path={"/reset-password"} element={<UnAuthProtected checkStep={true}
+                                                                                  component={<ResetPasswordPage />} />} />
+                        <Route path={"/profile"} element={<AuthProtected component={<AccountPage />} />}>
+                            <Route path={"/profile"} element={<ProfilePage />} />
+                            <Route path={"/profile/orders"} element={<OrdersHistoryPage />} />
+                        </Route>
+                        <Route path={"/ingredients/:id"} element={<IngredientDetails />}/>
+                        <Route path={"/orders"} element={<AuthProtected component={
+                                   <Modal onClose={handleOrderModalClose} >
+                                       <OrderDetails />
+                                   </Modal>} /> }/>
+                        <Route path={"*"} element={<FourZeroFourPage />} />
+                    </Routes>
+
+                    {background && (
+                        <Routes>
+                            <Route path={"/ingredients/:id"}
+                                element={
+                                    <Modal onClose={handleDetailsModalClose} header={"Детали ингредиента"}>
+                                        <IngredientDetails />
+                                    </Modal>}
+                            />
+                            <Route path={"/orders"}
+                                element={<AuthProtected component={
+                                    <Modal onClose={handleOrderModalClose} >
+                                        <OrderDetails />
+                                    </Modal>} />
+                                }/>
+                        </Routes>
+                    )}
+                </div>
+            </main>
         </div>
     );
 }
