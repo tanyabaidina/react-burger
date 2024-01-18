@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { API_URL } from "./constants";
 import { ACCESS_TOKEN, getToken, REFRESH_TOKEN, removeToken, setToken } from "./tokens";
+import {IIngredient, IPasswordData, IUserData, TForgotPassword, TResponse, TUserLogin} from "./types";
 
 const authApi = axios.create({
     baseURL: `${API_URL}/auth`,
@@ -46,7 +47,7 @@ const getRequest = async (url: string, config = {}) => {
     }
 }
 
-const postRequest = async (url: string, data: any) => {
+const postRequest = async (url: string, data: TResponse) => {
     const response = await axios.post(
         url,
         {...data},
@@ -76,19 +77,19 @@ export const getIngredientsData = async () => {
     return await getRequest(`${API_URL}/ingredients`);
 };
 
-export const getOrderDetailsData = async (data: any) => {
+export const getOrderDetailsData = async (data: string[]) => {
     return await postRequest(`${API_URL}/orders`, {ingredients: data});
 }
 
-export const sendForgotPassword = async (data: any) => {
+export const sendForgotPassword = async (data: TForgotPassword) => {
     await postRequest(`${API_URL}/password-reset`, data);
 }
 
-export const sendResetPassword = async (data: any) => {
+export const sendResetPassword = async (data: IPasswordData) => {
     await postRequest(`${API_URL}/password-reset/reset`, data);
 }
 
-export const sendLogin = async(data:any) => {
+export const sendLogin = async(data: TUserLogin) => {
     return await postRequest(`${API_URL}/auth/login`, data).then(saveTokens);
 }
 
@@ -96,7 +97,7 @@ export const sendLogout = async() => {
     await postRequest(`${API_URL}/auth/logout`, { token: getToken(REFRESH_TOKEN)}).then(removeToken);
 }
 
-export const sendRegister = async (data:any)=> {
+export const sendRegister = async (data: IUserData)=> {
     return await postRequest(`${API_URL}/auth/register`, data).then(saveTokens);
 }
 
@@ -108,7 +109,7 @@ export const getUserData = async() => {
     return await authApi.get("/user");
 }
 
-export const patchUserData = async(data:any) => {
+export const patchUserData = async(data: IUserData) => {
     return await authApi.patch("/user", {...data});
 }
 
