@@ -1,5 +1,4 @@
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import { useEffect } from 'react';
 
 import appStyle from './app.module.css';
@@ -9,25 +8,25 @@ import OrderDetails from "../order-details/order-details";
 import AppHeader from "../app-header/app-header";
 import Modal from "../modal/modal";
 
-import LoganPage from "../../pages/login";
-import MainPage from "../../pages/main";
+import { LoganPage } from "../../pages/login";
+import { MainPage } from "../../pages/main";
 import { RegisterPage } from "../../pages/register";
 import { ForgotPasswordPage } from "../../pages/forgot-password";
 import { ResetPasswordPage } from "../../pages/reset-password";
 import { ProfilePage } from "../../pages/profile";
-import AccountPage from "../../pages/account";
-import OrdersHistoryPage from "../../pages/orders-history";
-import FourZeroFourPage from "../../pages/four-zero-four";
+import { AccountPage } from "../../pages/account";
+import { OrdersHistoryPage } from "../../pages/orders-history";
+import { FourZeroFourPage } from "../../pages/four-zero-four";
 
 import { AuthProtected, UnAuthProtected } from "../protected-route-element/protected-route-element";
-import { getIngredients } from "../../services/actions/burger-ingredients";
-import { userData } from "../../services/actions/auth/user";
+import { getIngredients } from "../../services/actions/burger-ingredients/burger-ingredients";
+import { userData } from "../../services/actions/auth/user/user";
 import { useModal } from "../../hooks/use-modal";
-import { AppDispatch } from "../../services/store";
+import { useAppDispatch} from "../../services/store/store";
 
 
 function App() {
-    const dispatch: AppDispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const location = useLocation();
     const navigate = useNavigate();
 

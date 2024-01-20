@@ -1,37 +1,43 @@
-import {IUserData} from "../../helpers/types";
-
-export interface IActionCreator {
-    readonly type: string
-}
+import { IUserData } from "../../helpers/types";
+import { TUserActionTypes } from "./auth/user/user";
+import { TLoginActionTypes } from "./auth/login/login";
+import { TLogoutActionTypes } from "./auth/logout/logout";
+import { TRegisterActionTypes } from "./auth/register/register";
+import { TForgotPasswordActionTypes } from "./account/forgot-password/forgot-password";
+import { TResetPasswordActionTypes } from "./account/reset-password/reset-password";
 
 type TPayload = IUserData;
 
-export interface IActionPayloadCreator extends IActionCreator {
-    readonly payload: TPayload
+export type InferValueTypes<T> = T extends { [key: string]: infer U } ? U : never;
+
+function inferTypeName<T extends string>(arg: T) : T {
+    return arg;
 }
 
-export interface IActionErrorCreator extends IActionCreator {
-    readonly error: string
-}
+export const actionCreator = <T extends string>(type: T)  => ({
+    type: inferTypeName(type)
+})
 
-export type TAction = IActionCreator & IActionPayloadCreator & IActionErrorCreator
+export const actionPayloadCreator = <T extends string>(type: T, payload: TPayload)  => ({
+    type: inferTypeName(type),
+    payload: payload
+})
 
-export const actionCreator = (type: string) : IActionCreator => {
-    return {
-        type: type,
-    }
-}
+export const actionErrorCreator = <T extends string>(type: T, error: string)  => ({
+    type: inferTypeName(type),
+    error: error
+})
 
-export const actionPayloadCreator = (type: string, payload: TPayload) : IActionPayloadCreator => {
-    return {
-        type: type,
-        payload: payload
-    }
-}
+export type TActionCreator = ReturnType<typeof actionCreator>;
 
-export const actionErrorCreator = (type: string, error: string) : IActionErrorCreator => {
-    return {
-        type: type,
-        error: error
-    }
-}
+export type TActionPayloadCreator = ReturnType<typeof actionPayloadCreator>;
+
+export type TActionErrorCreator = ReturnType<typeof actionErrorCreator>
+
+export type TAction =
+    TUserActionTypes |
+    TLoginActionTypes |
+    TLogoutActionTypes |
+    TRegisterActionTypes |
+    TForgotPasswordActionTypes |
+    TResetPasswordActionTypes

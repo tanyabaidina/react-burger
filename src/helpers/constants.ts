@@ -1,14 +1,14 @@
 export const API_URL: string = "https://norma.nomoreparties.space/api";
 
 export const TABS = {
-    BUNS: 'buns',
-    MAINS: 'mains',
-    SAUCES: 'sauces',
-    TABS: 'tabs'
-}
+    BUNS: 'BUNS',
+    MAINS: 'MAINS',
+    SAUCES: 'SAUCES',
+    TABS: 'TABS'
+} as const;
 
 export const ITEM_TYPES = {
-    BUN: 'bun',
-    INGREDIENT: 'ingredient',
-    ITEM: 'item'
-}
+    BUN: 'BUN',
+    INGREDIENT: 'INGREDIENT',
+    ITEM: 'ITEM'
+} as const;

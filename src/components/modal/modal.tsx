@@ -1,4 +1,4 @@
-import {JSX, ReactNode, useEffect} from "react";
+import {JSX, PropsWithChildren, useEffect} from "react";
 import { createPortal } from "react-dom";
 
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -6,13 +6,12 @@ import ModalOverlay from "../modal-overlay/modal-overlay";
 import modalStyle from './modal.module.css';
 
 interface IModal {
-    children: JSX.Element;
     onClose: () => void;
     header?: string
 }
 
 const rootModal = document.getElementById("modal-root");
-const Modal = ({ children, onClose, header } : IModal): JSX.Element => {
+const Modal = ({ children, onClose, header } : PropsWithChildren<IModal>): JSX.Element => {
 
     useEffect(() => {
         const close = (e: KeyboardEvent) => {

@@ -1,18 +1,20 @@
-import {ChangeEvent, FormEvent, useEffect, useState} from "react";
-import { useDispatch, useSelector } from "react-redux";
+import {ChangeEvent, FC, FormEvent, useEffect, useState} from "react";
 import { useForm } from "../hooks/use-form";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import {PasswordInput, Button, EmailInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import loginStyle from "./account.module.css"
-import { loginUser } from "../services/actions/auth/login";
-import {AppDispatch, TRootState} from "../services/store";
+import { loginUser } from "../services/actions/auth/login/login";
+import { useAppDispatch } from "../services/store/store";
 
-function LoganPage() {
-    const { loginError } =  useSelector((store: TRootState) => store.userData);
+import { loginErrorSelector } from "../services/store/selectors";
+
+export const LoganPage: FC = () => {
+    const loginError =  useSelector(loginErrorSelector);
     const [error, setError] = useState("");
     const { form, formChange, isValid } = useForm({});
-    const dispatch: AppDispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
         setError(loginError)
@@ -23,7 +25,7 @@ function LoganPage() {
         setError("")
     }
 
-    const sendLogin = (e: FormEvent) => {
+    const sendLogin = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (!isValid()) {
             return;
@@ -72,5 +74,3 @@ function LoganPage() {
         </div>
     )
 }
-
-export default LoganPage;

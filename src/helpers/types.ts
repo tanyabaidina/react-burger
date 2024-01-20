@@ -47,6 +47,10 @@ export type TIngredientsData = {
     main?: IIngredient[];
 } & {};
 
+export type TOrder = {
+    number: number
+}
+
 export type TTokenRequest = {
     token: string | null
 }
@@ -55,9 +59,29 @@ export type TIngredientRequest = {
     ingredients: string[]
 }
 
-export type TResponse =
-    TUserLogin |
-    IPasswordData |
-    TForgotPassword |
-    TTokenRequest |
-    TIngredientRequest
+export interface IResponse  {
+    success: boolean
+}
+
+export interface IApiResponse extends IResponse {
+    message: string
+}
+
+export interface IIngredientsResponse extends IResponse {
+    data: IIngredient[]
+}
+
+export interface IRefreshTokenResponse extends IResponse{
+    accessToken: string,
+    refreshToken: string
+}
+
+export interface IAuthResponse extends IRefreshTokenResponse {
+    user: IUserData
+    accessToken: string
+    refreshToken: string
+}
+
+export interface IOrderResponse extends IResponse {
+    order: TOrder
+}

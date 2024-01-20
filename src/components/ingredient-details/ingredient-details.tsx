@@ -1,16 +1,17 @@
-import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import {useMemo, useEffect, JSX} from "react";
+import { useMemo, useEffect, JSX } from "react";
+import { useSelector } from "react-redux";
 
 import detailsStyle from './ingredient-details.module.css';
-import { setCurrentIngredient } from "../../services/actions/burger-ingredients";
-import {AppDispatch, TRootState} from "../../services/store";
-import {IIngredient, TIngredientsData} from "../../helpers/types";
+import { setCurrentIngredient } from "../../services/actions/burger-ingredients/burger-ingredients-action-creators";
+import { useAppDispatch } from "../../services/store/store";
+import { IIngredient, TIngredientsData } from "../../helpers/types";
+import { burgerIngredientsSelector } from "../../services/store/selectors";
 
 const IngredientDetails = (): JSX.Element => {
-    const { ingredients, currentIngredient, ingredientsRequest } = useSelector((store:TRootState ) => store.burgerIngredients);
+    const { ingredients, currentIngredient, ingredientsRequest } = useSelector(burgerIngredientsSelector);
     const { id } = useParams<{id: string}>();
-    const dispatch: AppDispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const getCurrentIngredient = (ingredients: TIngredientsData, id: string | undefined) => {
         let ingredient: IIngredient | null = null;

@@ -2,10 +2,10 @@ import {
     GET_INGREDIENTS_FAILED,
     GET_INGREDIENTS_REQUEST,
     GET_INGREDIENTS_SUCCESS,
-    IBurgerIngredientsAction,
+    IBurgerIngredientsActionTypes,
     SET_CURRENT_INGREDIENT
-} from "../actions/burger-ingredients";
-import {IIngredient, TIngredientsData} from "../../helpers/types";
+} from "../actions/burger-ingredients/burger-ingredients";
+import { IIngredient, TIngredientsData } from "../../helpers/types";
 
 interface IBurgerIngredientsState {
     ingredients: TIngredientsData;
@@ -30,7 +30,8 @@ const ingredientsByType = (ingredients : IIngredient[]) : TIngredientsData => {
     }, {} as TIngredientsData);
 }
 
-export const burgerIngredientsReducer = (state = initialState, action : IBurgerIngredientsAction): IBurgerIngredientsState => {
+export const burgerIngredientsReducer = (state = initialState, action : IBurgerIngredientsActionTypes)
+    : IBurgerIngredientsState => {
     switch (action.type) {
         case GET_INGREDIENTS_REQUEST: {
             return {

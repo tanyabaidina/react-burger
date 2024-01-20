@@ -1,8 +1,9 @@
 import {
     GET_ORDER_DETAILS_REQUEST,
     GET_ORDER_DETAILS_SUCCESS,
-    GET_ORDER_DETAILS_FAILED, IOrderAction
-} from "../actions/order-details";
+    GET_ORDER_DETAILS_FAILED,
+    TOrderActionTypes
+} from "../actions/order-details/order-details";
 
 interface IOrderDetailsState {
     order: number | null;
@@ -16,7 +17,7 @@ export const initialState : IOrderDetailsState = {
     orderDetailsFailed: false
 }
 
-export const orderDetailsReducer = (state = initialState, action : IOrderAction) : IOrderDetailsState => {
+export const orderDetailsReducer = (state = initialState, action : TOrderActionTypes) : IOrderDetailsState => {
     switch (action.type) {
         case GET_ORDER_DETAILS_REQUEST: {
             return {

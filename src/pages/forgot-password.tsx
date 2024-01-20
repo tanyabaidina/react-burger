@@ -1,17 +1,19 @@
 import { Link, useNavigate } from "react-router-dom";
 import {FC, FormEvent, useEffect, useState} from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 import loginStyle from "./account.module.css"
 import { Button, EmailInput } from "@ya.praktikum/react-developer-burger-ui-components";
 
-import { forgotPassword } from "../services/actions/account/forgot-password";
-import {AppDispatch, TRootState} from "../services/store";
+import { forgotPassword } from "../services/actions/account/forgot-password/forgot-password";
+import { useAppDispatch } from "../services/store/store";
+
+import { forgotPasswordSuccessSelector } from "../services/store/selectors";
 
 export const ForgotPasswordPage: FC = () => {
-    const { forgotPasswordSuccess } =  useSelector((store: TRootState) => store.userData);
+    const forgotPasswordSuccess =  useSelector(forgotPasswordSuccessSelector);
     const [email, setEmail] = useState("");
-    const dispatch: AppDispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -20,7 +22,7 @@ export const ForgotPasswordPage: FC = () => {
         }
     }, [forgotPasswordSuccess]);
 
-    const sendForgotPassword = (e: FormEvent) => {
+    const sendForgotPassword = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (email === "") {
             return;

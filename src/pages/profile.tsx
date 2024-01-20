@@ -1,17 +1,18 @@
-import { useDispatch, useSelector } from "react-redux";
-import {useEffect, useState, ChangeEvent, FormEvent, FC} from "react";
+import { useEffect, useState, ChangeEvent, FormEvent, FC } from "react";
+import { useSelector } from "react-redux";
 import { useForm } from "../hooks/use-form";
 
-import {Button, EmailInput, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
+import { Button, EmailInput, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import loginStyle from "./account.module.css";
-import { updateUserData } from "../services/actions/auth/user";
-import {AppDispatch, TRootState} from "../services/store";
+import { updateUserData } from "../services/actions/auth/user/user";
+import { useAppDispatch } from "../services/store/store";
+import { userDataSelector} from "../services/store/selectors";
 
 export const ProfilePage: FC = () =>  {
-    const { name, email } =  useSelector((store: TRootState) => store.userData);
+    const { name, email } =  useSelector(userDataSelector);
     const [visibleButtons, setVisibleButtons] = useState(false);
     const { form, updateForm, formChange } = useForm({});
-    const dispatch: AppDispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
         updateForm({
@@ -26,7 +27,7 @@ export const ProfilePage: FC = () =>  {
         setVisibleButtons(true);
     }
 
-    const handleUpdateUserData = (e: FormEvent) => {
+    const handleUpdateUserData = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         dispatch(updateUserData({
             name: form.name,

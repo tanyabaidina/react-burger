@@ -3,8 +3,10 @@ import {
     ADD_INGREDIENT,
     ADD_BUN,
     DELETE_INGREDIENT,
-    MOVE_INGREDIENT, CLEAR_CONSTRUCTOR, TBurgerConstructorAction,
-} from "../actions/burger-constructor";
+    MOVE_INGREDIENT,
+    CLEAR_CONSTRUCTOR,
+    TBurgerConstructorActionTypes,
+} from "../actions/burger-constructor/burger-constructor";
 import { IIngredientDnD } from "../../helpers/types";
 
 interface IBurgerConstructorState {
@@ -17,7 +19,8 @@ export const initialState : IBurgerConstructorState = {
     ingredients: []
 }
 
-export const burgerConstructorReducer = (state = initialState, action : TBurgerConstructorAction) : IBurgerConstructorState => {
+export const burgerConstructorReducer = (state = initialState, action : TBurgerConstructorActionTypes)
+    : IBurgerConstructorState => {
     switch (action.type) {
         case ADD_INGREDIENT: {
             return {
@@ -34,7 +37,8 @@ export const burgerConstructorReducer = (state = initialState, action : TBurgerC
         case DELETE_INGREDIENT: {
             return {
                 ...state,
-                ingredients: [...state.ingredients].filter( (item: IIngredientDnD) => item.uniqId !== action.ingredient.uniqId)
+                ingredients: [...state.ingredients].filter( (item: IIngredientDnD) =>
+                    item.uniqId !== action.ingredient.uniqId)
             }
         }
         case MOVE_INGREDIENT: {

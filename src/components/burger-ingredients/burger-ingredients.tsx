@@ -6,11 +6,11 @@ import ingredientsStyle from './burger-ingredients.module.css'
 
 import IngredientElement from "../ingredient-element/ingredient-element";
 import { ITEM_TYPES, TABS } from "../../helpers/constants";
-import {TRootState} from "../../services/store";
+import { burgerIngredientsSelector } from "../../services/store/selectors";
 
 function BurgerIngredients() {
-    const { ingredients, ingredientsRequest } = useSelector(( store: TRootState ) => store.burgerIngredients);
-    const [activeTab, setActiveTab] = useState(TABS.BUNS);
+    const { ingredients, ingredientsRequest } = useSelector(burgerIngredientsSelector);
+    const [activeTab , setActiveTab] = useState<keyof typeof TABS>(TABS.BUNS);
 
     const bunsRef = useRef<HTMLDivElement>(null);
     const saucesRef = useRef<HTMLDivElement>(null);
@@ -35,7 +35,7 @@ function BurgerIngredients() {
     }
 
     const onClickTab = (value : string) => {
-        setActiveTab(value);
+        setActiveTab(value as keyof typeof TABS);
         const targetTab = document.getElementById(value);
         targetTab && targetTab.scrollIntoView({ behavior: "smooth" });
     }

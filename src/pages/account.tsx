@@ -2,11 +2,11 @@ import { NavLink, Outlet } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import AccountStyle from "./account.module.css";
-import { userLogout } from "../services/actions/auth/logout";
-import {AppDispatch} from "../services/store";
+import { userLogout } from "../services/actions/auth/logout/logout";
+import {AppDispatch, useAppDispatch} from "../services/store/store";
 
-function AccountPage() {
-    const dispatch: AppDispatch = useDispatch();
+export const AccountPage = () => {
+    const dispatch = useAppDispatch();
 
     const userLogoutClick = () => {
         dispatch(userLogout())
@@ -46,5 +46,3 @@ function AccountPage() {
         </div>
     )
 }
-
-export default AccountPage;

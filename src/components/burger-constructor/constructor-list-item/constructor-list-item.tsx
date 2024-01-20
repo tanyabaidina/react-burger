@@ -1,16 +1,15 @@
 import { useRef } from "react";
 import { useDrag, useDrop } from "react-dnd";
-import { useDispatch } from "react-redux";
 
 import constructorStyle from "../burger-constructor.module.css";
 import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import {
     deleteIngredientAction,
     moveIngredientAction
-} from "../../../services/actions/burger-constructor";
+} from "../../../services/actions/burger-constructor/burger-constructor-action-creators";
 import { IIngredientDnD } from "../../../helpers/types";
 import { ITEM_TYPES } from "../../../helpers/constants";
-import { AppDispatch } from "../../../services/store";
+import { useAppDispatch} from "../../../services/store/store";
 
 interface IConstructorListItemProps {
     item: IIngredientDnD,
@@ -23,7 +22,7 @@ type TDnDObject = {
 }
 
 function ConstructorListItem({ item, index, isHover } : IConstructorListItemProps) {
-    const dispatch : AppDispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const ref = useRef<HTMLLIElement | null>(null)
 
     const [, itemDrag] = useDrag<TDnDObject>({

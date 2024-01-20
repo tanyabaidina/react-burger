@@ -1,6 +1,6 @@
 import notFoundStyle from './four-zero-four.module.css';
 
-function FourZeroFourPage() {
+export const FourZeroFourPage = () => {
     return (
         <div className={notFoundStyle.wrapper}>
             <h1 className={`text text_type_digits-large ${notFoundStyle.number}`}>404</h1>
@@ -8,5 +8,3 @@ function FourZeroFourPage() {
         </div>
     )
 }
-
-export default FourZeroFourPage;

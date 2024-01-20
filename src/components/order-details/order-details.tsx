@@ -1,11 +1,11 @@
 import orderStyle from './order-details.module.css';
 import doneImage from '../../images/order-done.svg'
-import { useSelector } from "react-redux";
 import Preloader from "../preloader/preloader";
-import {TRootState} from "../../services/store";
+import { useSelector } from "react-redux";
+import { orderDetailsSelector } from "../../services/store/selectors";
 
 const OrderDetails = () => {
-    const { order, orderDetailsRequest } = useSelector((store: TRootState ) => store.orderDetails);
+    const { order, orderDetailsRequest } = useSelector(orderDetailsSelector);
 
     if (orderDetailsRequest)
         return (

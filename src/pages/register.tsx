@@ -1,18 +1,20 @@
-import {ChangeEvent, FC, FormEvent, useEffect, useState} from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { ChangeEvent, FC, FormEvent, useEffect, useState } from "react";
 import { useForm } from "../hooks/use-form";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import loginStyle from "./account.module.css"
-import {Button, EmailInput, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
-import { registerUser } from "../services/actions/auth/register";
-import {AppDispatch, TRootState} from "../services/store";
+import { Button, EmailInput, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
+import { registerUser } from "../services/actions/auth/register/register";
+import { useAppDispatch } from "../services/store/store";
+
+import { registerErrorSelector } from "../services/store/selectors";
 
 export const RegisterPage: FC = () => {
-    const { registerError } =  useSelector((store: TRootState) => store.userData);
+    const registerError=  useSelector(registerErrorSelector);
     const [error, setError] = useState("");
     const { form, formChange, isValid } = useForm({});
-    const dispatch: AppDispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
         setError(registerError)
@@ -23,7 +25,7 @@ export const RegisterPage: FC = () => {
         setError("")
     }
 
-    const sendRegister = (e: FormEvent) => {
+    const sendRegister = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (!isValid()) {
             return;

@@ -1,16 +1,17 @@
 import {FC, FormEvent, useEffect} from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import loginStyle from "./account.module.css"
 import { Button, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
-import { resetPassword } from "../services/actions/account/reset-password";
-import {useForm} from "../hooks/use-form";
-import {AppDispatch, TRootState} from "../services/store";
+import { resetPassword } from "../services/actions/account/reset-password/reset-password";
+import { useForm } from "../hooks/use-form";
+import { useAppDispatch } from "../services/store/store";
+import { resetPasswordSuccessSelector } from "../services/store/selectors";
 
 export const ResetPasswordPage: FC = () => {
-    const { resetPasswordSuccess } =  useSelector((store: TRootState) => store.userData);
-    const dispatch: AppDispatch = useDispatch();
+    const resetPasswordSuccess  = useSelector(resetPasswordSuccessSelector);
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const { form, isValid, formChange } = useForm({});
 
@@ -19,7 +20,7 @@ export const ResetPasswordPage: FC = () => {
             navigate("/login");
         }
     }, [resetPasswordSuccess]);
-    const sendResetPassword = (e: FormEvent) => {
+    const sendResetPassword = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (!isValid()) {
             return;

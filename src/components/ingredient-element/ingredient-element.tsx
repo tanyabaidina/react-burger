@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import { useDrag } from 'react-dnd';
 
 import ingredientStyle from './ingredient-element.module.css'
-import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
+import { Counter, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
-import { setCurrentIngredient } from "../../services/actions/burger-ingredients";
+import { setCurrentIngredient } from "../../services/actions/burger-ingredients/burger-ingredients-action-creators";
 import { IIngredient } from "../../helpers/types";
-import { AppDispatch, TRootState } from "../../services/store";
+import { useAppDispatch } from "../../services/store/store";
+import { burgerConstructorSelector } from "../../services/store/selectors";
 
 interface IIngredientElement {
     item: IIngredient;
@@ -16,10 +17,10 @@ interface IIngredientElement {
 }
 
 function IngredientElement({ item, type } : IIngredientElement) {
-    const { bun, ingredients } = useSelector((store: TRootState) => store.burgerConstructor);
+    const { bun, ingredients } = useSelector(burgerConstructorSelector);
     const [count, setCount] = useState(0);
     const location = useLocation();
-    const dispatch: AppDispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
         const array = [...[bun, bun], ...ingredients].filter((_item) => _item?._id === item._id)

@@ -7,7 +7,7 @@ import BurgerConstructor from "../components/burger-constructor/burger-construct
 interface IMainPage {
     openOrderModal: () => void;
 }
-function MainPage({openOrderModal} : IMainPage) {
+export const MainPage = ({openOrderModal} : IMainPage) => {
     return (
         <DndProvider backend={HTML5Backend}>
             <BurgerIngredients />
@@ -15,5 +15,3 @@ function MainPage({openOrderModal} : IMainPage) {
         </DndProvider>
     )
 }
-
-export default MainPage;

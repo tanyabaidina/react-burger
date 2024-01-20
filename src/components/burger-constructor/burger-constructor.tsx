@@ -1,19 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { useDrop } from "react-dnd";
 import { useNavigate } from "react-router-dom";
 
 import constructorStyle from './burger-constructor.module.css'
-import { ConstructorElement, CurrencyIcon, Button} from '@ya.praktikum/react-developer-burger-ui-components';
 
+import { ConstructorElement, CurrencyIcon, Button} from '@ya.praktikum/react-developer-burger-ui-components';
 import { v4 as uuidv4 } from 'uuid';
-import { addBunAction, addIngredientAction } from "../../services/actions/burger-constructor";
-import { getOrderDetails } from "../../services/actions/order-details";
+import { addBunAction, addIngredientAction } from "../../services/actions/burger-constructor/burger-constructor-action-creators";
+import { getOrderDetails } from "../../services/actions/order-details/order-details";
 import { ITEM_TYPES } from "../../helpers/constants";
 
 import ElementDropzone from "./element-dropzone/element-dropzone";
 import ConstructorListItem from "./constructor-list-item/constructor-list-item";
-import { AppDispatch, TRootState } from "../../services/store";
+import { useAppDispatch } from "../../services/store/store";
+import { burgerConstructorSelector, isAuthSelector } from "../../services/store/selectors";
+
 import { IIngredientDnD } from "../../helpers/types"
 
 interface IBurgerConstructorProps {
@@ -21,9 +23,9 @@ interface IBurgerConstructorProps {
 }
 
 function BurgerConstructor({ onClick } : IBurgerConstructorProps) {
-    const { bun, ingredients } = useSelector((store: TRootState) => store.burgerConstructor);
-    const isAuth =  useSelector((store: TRootState) => store.userData.isAuth);
-    const dispatch: AppDispatch = useDispatch();
+    const { bun, ingredients } = useSelector(burgerConstructorSelector);
+    const isAuth =  useSelector(isAuthSelector);
+    const dispatch = useAppDispatch();
     const [totalPrice, setTotalPrice] = useState(0);
     const [warning, setWarning] = useState(false);
     const navigate = useNavigate();

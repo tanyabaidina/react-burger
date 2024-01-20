@@ -2,7 +2,7 @@ import {
     OPEN_MODAL_INGREDIENT_DETAILS,
     CLOSE_MODAL_INGREDIENT_DETAILS, IIngredientDetailsAction
 } from "../actions/ingredient-details";
-import {IIngredient} from "../../helpers/types";
+import { IIngredient } from "../../helpers/types";
 
 interface IIngredientDetailsState {
     ingredient: IIngredient | {}
