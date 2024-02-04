@@ -1,0 +1,33 @@
+.wrapper {
+    display: grid;
+    grid-auto-rows: 64px;
+    justify-content: center;
+    align-items: center;
+    justify-items: center;
+    height: 64px;
+    width: 64px;
+    border-radius: 32px;
+    border: double 2px transparent;
+    background-image: linear-gradient(#131316, #131316), radial-gradient(circle at top left, #801AB2, #4C4CFF);
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+
+    img {
+        height: 60px;
+        grid-row: 1;
+        grid-column: 1;
+    }
+
+    .count {
+        background-color: rgba(28, 28, 33, 0.6);
+        z-index: 7;
+        height: 64px;
+        width: 64px;
+        border-radius: 32px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        grid-row: 1;
+        grid-column: 1;
+    }
+}

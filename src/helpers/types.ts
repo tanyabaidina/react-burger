@@ -1,3 +1,5 @@
+import {WebsocketStatus} from "./constants";
+
 export interface IIngredient {
     _id: string;
     name: string;
@@ -51,6 +53,17 @@ export type TOrder = {
     number: number
 }
 
+export interface IOrderData {
+    ingredients: Array<string>,
+    _id: string,
+    status: 'created' | 'pending' | 'done',
+    number: number,
+    createdAt: string,
+    updatedAt: string,
+    name: string,
+    totalPrice: number
+}
+
 export type TTokenRequest = {
     token: string | null
 }
@@ -85,3 +98,34 @@ export interface IAuthResponse extends IRefreshTokenResponse {
 export interface IOrderResponse extends IResponse {
     order: TOrder
 }
+
+export interface IOrderDataResponse extends IResponse {
+    orders: IOrderData[]
+}
+
+export type TError = {
+    success?: boolean;
+    message?: string;
+    status?: number;
+};
+
+export type TOrderFeed = {
+    orders: Array<IOrderData>
+    success: boolean
+    total: number
+    totalToday: number
+};
+
+export type TFeedState = {
+    status: WebsocketStatus,
+    errorMessage: null | undefined | TError,
+    wsError: null | string,
+    wsOpen: boolean,
+    wsUrl: string,
+    fetchError: null | undefined | TError,
+    fetchRequest: boolean,
+    success: boolean,
+    ordersData: TOrderFeed | null,
+    currentOrder: IOrderData | null,
+    ordersMap: Map<string, IOrderData> | null
+};

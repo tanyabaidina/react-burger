@@ -1,4 +1,5 @@
 export const API_URL: string = "https://norma.nomoreparties.space/api";
+export const WS_URL: string = "wss://norma.nomoreparties.space";
 
 export const TABS = {
     BUNS: 'BUNS',
@@ -12,3 +13,14 @@ export const ITEM_TYPES = {
     INGREDIENT: 'INGREDIENT',
     ITEM: 'ITEM'
 } as const;
+
+export enum WebsocketStatus {
+    CONNECTING = 'CONNECTING',
+    ONLINE = 'ONLINE',
+    OFFLINE = 'OFFLINE'
+}
+
+export const showOrderStatus = new Map();
+showOrderStatus.set('done', 'Выполнен');
+showOrderStatus.set('created', 'Создан');
+showOrderStatus.set('pending', 'Готовится');

@@ -5,7 +5,7 @@ import { USER_REQUEST, USER_SUCCESS, USER_FAILED } from "../actions/auth/user/us
 import { UPDATE_USER_REQUEST, UPDATE_USER_SUCCESS, UPDATE_USER_FAILED } from "../actions/auth/user/user";
 import { FORGOT_PASSWORD_REQUEST, FORGOT_PASSWORD_SUCCESS, FORGOT_PASSWORD_FAILED } from "../actions/account/forgot-password/forgot-password";
 import { RESET_PASSWORD_REQUEST, RESET_PASSWORD_SUCCESS, RESET_PASSWORD_FAILED } from "../actions/account/reset-password/reset-password";
-import { TAction } from "../actions/helper";
+import { TUserActions } from "../actions/helper";
 
 interface IUserState {
     email: string | undefined;
@@ -29,7 +29,7 @@ export const initialState : IUserState = {
     registerError: ""
 }
 
-export const userReducer = (state = initialState, action: TAction): IUserState => {
+export const userReducer = (state = initialState, action: TUserActions): IUserState => {
     switch (action.type) {
         case LOGIN_REQUEST: {
             return {

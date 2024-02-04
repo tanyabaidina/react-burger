@@ -15,14 +15,16 @@ import { ForgotPasswordPage } from "../../pages/forgot-password";
 import { ResetPasswordPage } from "../../pages/reset-password";
 import { ProfilePage } from "../../pages/profile";
 import { AccountPage } from "../../pages/account";
-import { OrdersHistoryPage } from "../../pages/orders-history";
-import { FourZeroFourPage } from "../../pages/four-zero-four";
+import { OrdersHistoryPage } from "../../pages/orders-history/orders-history";
+import { FourZeroFourPage } from "../../pages/four-zero-four/four-zero-four";
 
 import { AuthProtected, UnAuthProtected } from "../protected-route-element/protected-route-element";
 import { getIngredients } from "../../services/actions/burger-ingredients/burger-ingredients";
 import { userData } from "../../services/actions/auth/user/user";
 import { useModal } from "../../hooks/use-modal";
 import { useAppDispatch} from "../../services/store/store";
+import { FeedPage } from "../../pages/feed-page/feed-page";
+import { OrderInfoPopup } from "../order-info-popup/order-info-popup";
 
 
 function App() {
@@ -37,7 +39,7 @@ function App() {
 
     const { closeModal: closeIngredientModal} = useModal({ isOpen: false });
 
-    const { openModal: openOrderModal, closeModal: closeOrderModel} = useModal({ isOpen: false} );
+    const { openModal: openOrderModal, closeModal: closeOrderModel } = useModal({ isOpen: false} );
 
     const handleDetailsModalClose = () => {
         closeIngredientModal();
@@ -67,11 +69,14 @@ function App() {
                             <Route path={"/profile"} element={<ProfilePage />} />
                             <Route path={"/profile/orders"} element={<OrdersHistoryPage />} />
                         </Route>
+                        <Route path={"/profile/orders/:id"} element={<AuthProtected component={<OrderInfoPopup />} />}/>
                         <Route path={"/ingredients/:id"} element={<IngredientDetails />}/>
+                        <Route path={"/feed/:id"} element={<OrderInfoPopup />}/>
                         <Route path={"/orders"} element={<AuthProtected component={
                                    <Modal onClose={handleOrderModalClose} >
                                        <OrderDetails />
                                    </Modal>} /> }/>
+                        <Route path={"/feed"} element={<FeedPage />} />
                         <Route path={"*"} element={<FourZeroFourPage />} />
                     </Routes>
 
@@ -82,6 +87,20 @@ function App() {
                                     <Modal onClose={handleDetailsModalClose} header={"Детали ингредиента"}>
                                         <IngredientDetails />
                                     </Modal>}
+                            />
+                            <Route path={"/feed/:id"}
+                                   element={
+                                       <Modal onClose={handleOrderModalClose}>
+                                           <OrderInfoPopup />
+                                       </Modal>
+                                   }
+                            />
+                            <Route path={"/profile/orders/:id"}
+                                   element={
+                                       <Modal onClose={handleOrderModalClose}>
+                                           <OrderInfoPopup />
+                                       </Modal>
+                                   }
                             />
                             <Route path={"/orders"}
                                 element={<AuthProtected component={

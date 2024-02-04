@@ -3,10 +3,16 @@ import { API_URL } from "./constants";
 import { ACCESS_TOKEN, getToken, REFRESH_TOKEN, removeToken, setToken } from "./tokens";
 import {
     IPasswordData,
-    IUserData, IAuthResponse,
-    TForgotPassword, IIngredientsResponse,
+    IUserData,
+    IAuthResponse,
+    TForgotPassword,
+    IIngredientsResponse,
     IRefreshTokenResponse,
-    TUserLogin, IResponse, IOrderResponse, TIngredientRequest, IApiResponse, TTokenRequest
+    TUserLogin,
+    IResponse,
+    IApiResponse,
+    TTokenRequest,
+    IOrderDataResponse
 } from "./types";
 
 const authApi = axios.create({
@@ -83,7 +89,7 @@ export const getIngredientsData = async (): Promise<IIngredientsResponse> => {
 };
 
 export const getOrderDetailsData = async (data: string[]) => {
-    return await postRequest<TIngredientRequest, IOrderResponse>(`${API_URL}/orders`, {ingredients: data});
+    return await authApi.post(`${API_URL}/orders`, {ingredients: data});
 }
 
 export const sendForgotPassword = async (data: TForgotPassword) => {
@@ -120,4 +126,8 @@ export const getUserData = async() => {
 
 export const patchUserData = async(data: IUserData) => {
     return await authApi.patch("/user", {...data});
+}
+
+export const getOrderById = async(id: string) => {
+    return await getRequest<IOrderDataResponse>(`${API_URL}/orders/${id}`)
 }

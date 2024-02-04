@@ -11,14 +11,16 @@ interface IBurgerIngredientsState {
     ingredients: TIngredientsData;
     ingredientsRequest: boolean;
     ingredientsFailed: boolean;
-    currentIngredient: IIngredient | null
+    currentIngredient: IIngredient | null,
+    ingredientsMap: Map<string, IIngredient> | null
 }
 
 export const initialState: IBurgerIngredientsState = {
     ingredients: {} as TIngredientsData,
     ingredientsRequest: false,
     ingredientsFailed: false,
-    currentIngredient: null
+    currentIngredient: null,
+    ingredientsMap: null
 }
 
 const ingredientsByType = (ingredients : IIngredient[]) : TIngredientsData => {
@@ -28,6 +30,15 @@ const ingredientsByType = (ingredients : IIngredient[]) : TIngredientsData => {
         ...group,
         [item.type]: [...(tempData[item.type] || []), item]}
     }, {} as TIngredientsData);
+}
+
+export const getIngredientsMap = (ingredients : IIngredient[]) => {
+    const _map = new Map<string, IIngredient>();
+    ingredients.forEach((item) => {
+        _map.set(item._id, item);
+    });
+
+    return _map;
 }
 
 export const burgerIngredientsReducer = (state = initialState, action : IBurgerIngredientsActionTypes)
@@ -44,7 +55,8 @@ export const burgerIngredientsReducer = (state = initialState, action : IBurgerI
                 ...state,
                 ingredientsRequest: false,
                 ingredientsFailed: false,
-                ingredients: ingredientsByType(action.ingredients)
+                ingredients: ingredientsByType(action.ingredients),
+                ingredientsMap: getIngredientsMap(action.ingredients)
             }
         }
         case GET_INGREDIENTS_FAILED: {

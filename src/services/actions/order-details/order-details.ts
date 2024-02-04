@@ -15,7 +15,7 @@ export const getOrderDetails = (data: string[]) => {
         dispatch(actions.requestAction());
         getOrderDetailsData(data)
             .then((response) => {
-                    dispatch(actions.successAction(response.order.number))
+                    dispatch(actions.successAction(response.data.order.number))
                     dispatch(clearConstructorAction())
             })
             .catch(() => {

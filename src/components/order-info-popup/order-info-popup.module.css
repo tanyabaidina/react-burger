@@ -1,0 +1,32 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    width: 640px;
+    gap: 40px;
+}
+
+.ingredients__list {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.order__info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px
+}
+
+.order__minor {
+    display: flex;
+    justify-content: space-between;
+    width: 640px;
+}
+
+.order__price {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px
+}

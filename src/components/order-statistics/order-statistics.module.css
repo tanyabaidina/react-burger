@@ -1,0 +1,22 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+    width: 640px;
+    margin-top: 104px;
+    margin-left: 60px;
+}
+
+.orders__flow {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.orders__flow__column {
+    display: flex;
+    flex-direction: column;
+}
+
+.ready__orders {
+    color: #00cccc;
+}
