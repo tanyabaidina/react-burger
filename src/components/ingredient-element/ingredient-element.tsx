@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import { useDrag } from 'react-dnd';
 
@@ -8,7 +7,7 @@ import { Counter, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-c
 
 import { setCurrentIngredient } from "../../services/actions/burger-ingredients/burger-ingredients-action-creators";
 import { IIngredient } from "../../helpers/types";
-import { useAppDispatch } from "../../services/store/store";
+import { useAppDispatch, useAppSelector } from "../../services/store/store";
 import { burgerConstructorSelector } from "../../services/store/selectors";
 
 interface IIngredientElement {
@@ -17,7 +16,7 @@ interface IIngredientElement {
 }
 
 function IngredientElement({ item, type } : IIngredientElement) {
-    const { bun, ingredients } = useSelector(burgerConstructorSelector);
+    const { bun, ingredients } = useAppSelector(burgerConstructorSelector);
     const [count, setCount] = useState(0);
     const location = useLocation();
     const dispatch = useAppDispatch();

@@ -1,15 +1,16 @@
 import { useState, useRef } from "react";
-import { useSelector } from "react-redux";
 
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import ingredientsStyle from './burger-ingredients.module.css'
 
 import IngredientElement from "../ingredient-element/ingredient-element";
-import { ITEM_TYPES, TABS } from "../../helpers/constants";
 import { burgerIngredientsSelector } from "../../services/store/selectors";
+import { useAppSelector } from "../../services/store/store";
+
+import { ITEM_TYPES, TABS } from "../../helpers/constants";
 
 function BurgerIngredients() {
-    const { ingredients, ingredientsRequest } = useSelector(burgerIngredientsSelector);
+    const { ingredients, ingredientsRequest } = useAppSelector(burgerIngredientsSelector);
     const [activeTab , setActiveTab] = useState<keyof typeof TABS>(TABS.BUNS);
 
     const bunsRef = useRef<HTMLDivElement>(null);

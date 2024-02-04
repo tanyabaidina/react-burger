@@ -1,9 +1,8 @@
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
 
 import style from "./orders-history.module.css";
 
-import { useAppDispatch } from "../../services/store/store";
+import { useAppDispatch, useAppSelector } from "../../services/store/store";
 import { wsConnectAuth, wsDisconnectAuth } from "../../services/actions/order-feed-auth";
 import { ordersDataAuthSelector } from "../../services/store/selectors";
 
@@ -14,7 +13,7 @@ import { ACCESS_TOKEN, getToken } from "../../helpers/tokens";
 
 export const OrdersHistoryPage = () => {
     const dispatch = useAppDispatch();
-    const ordersData = useSelector(ordersDataAuthSelector);
+    const ordersData = useAppSelector(ordersDataAuthSelector);
 
     useEffect(() => {
         dispatch(wsConnectAuth(`${WS_URL}/orders?token=${getToken(ACCESS_TOKEN)}`));

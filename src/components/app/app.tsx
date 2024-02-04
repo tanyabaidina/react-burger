@@ -58,7 +58,7 @@ function App() {
             <AppHeader />
             <main className={appStyle.main}>
                 <div className={appStyle.wrapper}>
-                    <Routes>
+                    <Routes location={background || location}>
                         <Route path={"/login"} element={<UnAuthProtected component={<LoganPage />} />} />
                         <Route path={"/"} element={<MainPage openOrderModal={openOrderModal}/>} />
                         <Route path={"/register"} element={<UnAuthProtected component={ <RegisterPage />} />} />

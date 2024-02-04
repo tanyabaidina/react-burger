@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 
 import style from "./order-ingredients-list.module.css";
 
 import { ingredientsMapSelector } from "../../services/store/selectors";
+import { useAppSelector } from "../../services/store/store";
 import { OrderIngredient } from "../order-ingredient/order-ingredient";
 
 interface IOrderIngredientsList {
     ingredients: Array<string>,
 }
 export const OrderIngredientsList = ({ingredients} : IOrderIngredientsList) => {
-    const ingredientsMap = useSelector(ingredientsMapSelector);
+    const ingredientsMap = useAppSelector(ingredientsMapSelector);
     const [overflow, setOverflow] = useState(0);
 
     useEffect(() => {

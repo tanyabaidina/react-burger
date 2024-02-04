@@ -1,17 +1,15 @@
 import { Link, useNavigate } from "react-router-dom";
-import {FC, FormEvent, useEffect, useState} from "react";
-import { useSelector } from "react-redux";
+import { FC, FormEvent, useEffect, useState } from "react";
 
 import loginStyle from "./account.module.css"
 import { Button, EmailInput } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import { forgotPassword } from "../services/actions/account/forgot-password/forgot-password";
-import { useAppDispatch } from "../services/store/store";
-
+import { useAppDispatch, useAppSelector } from "../services/store/store";
 import { forgotPasswordSuccessSelector } from "../services/store/selectors";
 
 export const ForgotPasswordPage: FC = () => {
-    const forgotPasswordSuccess =  useSelector(forgotPasswordSuccessSelector);
+    const forgotPasswordSuccess =  useAppSelector(forgotPasswordSuccessSelector);
     const [email, setEmail] = useState("");
     const dispatch = useAppDispatch();
     const navigate = useNavigate();

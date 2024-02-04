@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 
 import style from "./feed-page.module.css";
 
-import { useAppDispatch } from "../../services/store/store";
+import { useAppDispatch, useAppSelector } from "../../services/store/store";
 import { wsConnect, wsDisconnect } from "../../services/actions/order-feed";
 import { ordersDataSelector } from "../../services/store/selectors";
 
@@ -13,7 +12,7 @@ import { WS_URL } from "../../helpers/constants";
 
 export const FeedPage = () => {
     const dispatch = useAppDispatch();
-    const ordersData = useSelector(ordersDataSelector);
+    const ordersData = useAppSelector(ordersDataSelector);
     const [readyOrders, setReadyOrders] = useState<number[]>([]);
     const [ordersInProgress, setOrdersInProgress] = useState<number[]>([]);
 

@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import style from "./ingredient-item.module.css";
 
 import { ingredientsMapSelector } from "../../../services/store/selectors";
+import { useAppSelector } from "../../../services/store/store";
+
 import { OrderIngredient } from "../../order-ingredient/order-ingredient";
 import { IIngredient } from "../../../helpers/types";
 
@@ -15,7 +16,7 @@ interface IIngredientItem {
 
 export const IngredientItem = ({ingredientId, count} : IIngredientItem) => {
     const [currentIngredient, setCurrentIngredient] = useState<IIngredient | undefined>();
-    const ingredientsMap = useSelector(ingredientsMapSelector);
+    const ingredientsMap = useAppSelector(ingredientsMapSelector);
 
     useEffect(() => {
         if (ingredientsMap) {

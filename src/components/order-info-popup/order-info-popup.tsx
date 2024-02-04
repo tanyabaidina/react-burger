@@ -1,21 +1,20 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
 import { CurrencyIcon, FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
 import style from "./order-info-popup.module.css";
 
 import { currentOrderSelector, ingredientsMapSelector, orderMapSelector } from "../../services/store/selectors";
-import { useAppDispatch } from "../../services/store/store";
+import { useAppDispatch, useAppSelector } from "../../services/store/store";
 import { setCurrentOrder } from "../../services/actions/order-feed";
 import { fetchOrderById } from "../../services/reducers/order-feed";
 
 import { OrderInfoPopupIngredients } from "../order-info-popup-ingredients/order-info-popup-ingredients";
 
 export const OrderInfoPopup = () => {
-    const currentOrder = useSelector(currentOrderSelector);
-    const orderMap = useSelector(orderMapSelector);
-    const ingredientsMap = useSelector(ingredientsMapSelector);
+    const currentOrder = useAppSelector(currentOrderSelector);
+    const orderMap = useAppSelector(orderMapSelector);
+    const ingredientsMap = useAppSelector(ingredientsMapSelector);
 
     const dispatch = useAppDispatch();
     const { id } = useParams<{id: string}>();

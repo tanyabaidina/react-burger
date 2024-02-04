@@ -1,16 +1,15 @@
 import { useParams } from "react-router-dom";
 import { useMemo, useEffect, JSX } from "react";
-import { useSelector } from "react-redux";
 
 import detailsStyle from './ingredient-details.module.css';
 import { setCurrentIngredient } from "../../services/actions/burger-ingredients/burger-ingredients-action-creators";
-import { useAppDispatch } from "../../services/store/store";
+import { useAppDispatch, useAppSelector } from "../../services/store/store";
 import { burgerIngredientsSelector } from "../../services/store/selectors";
 
 const IngredientDetails = (): JSX.Element => {
     const { currentIngredient,
             ingredientsRequest,
-            ingredientsMap } = useSelector(burgerIngredientsSelector);
+            ingredientsMap } = useAppSelector(burgerIngredientsSelector);
 
     const { id } = useParams<{id: string}>();
     const dispatch = useAppDispatch();

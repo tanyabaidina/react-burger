@@ -1,10 +1,9 @@
 import {NavLink, Outlet, useLocation} from "react-router-dom";
-import { useDispatch } from "react-redux";
 
 import AccountStyle from "./account.module.css";
 import { userLogout } from "../services/actions/auth/logout/logout";
-import {AppDispatch, useAppDispatch} from "../services/store/store";
-import {useEffect, useState} from "react";
+import { useAppDispatch} from "../services/store/store";
+import { useEffect, useState } from "react";
 
 export const AccountPage = () => {
     const dispatch = useAppDispatch();

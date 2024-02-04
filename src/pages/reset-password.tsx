@@ -1,16 +1,15 @@
 import {FC, FormEvent, useEffect} from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
 
 import loginStyle from "./account.module.css"
 import { Button, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import { resetPassword } from "../services/actions/account/reset-password/reset-password";
 import { useForm } from "../hooks/use-form";
-import { useAppDispatch } from "../services/store/store";
+import { useAppDispatch, useAppSelector } from "../services/store/store";
 import { resetPasswordSuccessSelector } from "../services/store/selectors";
 
 export const ResetPasswordPage: FC = () => {
-    const resetPasswordSuccess  = useSelector(resetPasswordSuccessSelector);
+    const resetPasswordSuccess  = useAppSelector(resetPasswordSuccessSelector);
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const { form, isValid, formChange } = useForm({});

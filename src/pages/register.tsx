@@ -1,17 +1,16 @@
 import { ChangeEvent, FC, FormEvent, useEffect, useState } from "react";
 import { useForm } from "../hooks/use-form";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
 
 import loginStyle from "./account.module.css"
 import { Button, EmailInput, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import { registerUser } from "../services/actions/auth/register/register";
-import { useAppDispatch } from "../services/store/store";
+import { useAppDispatch, useAppSelector } from "../services/store/store";
 
 import { registerErrorSelector } from "../services/store/selectors";
 
 export const RegisterPage: FC = () => {
-    const registerError=  useSelector(registerErrorSelector);
+    const registerError=  useAppSelector(registerErrorSelector);
     const [error, setError] = useState("");
     const { form, formChange, isValid } = useForm({});
     const dispatch = useAppDispatch();

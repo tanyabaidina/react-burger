@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 
 import { OrderIngredientsList } from "../order-ingredients-list/order-ingredients-list";
@@ -8,7 +7,7 @@ import style from "./order-element.module.css";
 
 
 import { ingredientsMapSelector } from "../../services/store/selectors";
-import { useAppDispatch } from "../../services/store/store";
+import { useAppDispatch, useAppSelector } from "../../services/store/store";
 import { setCurrentOrder } from "../../services/actions/order-feed";
 
 import { showOrderStatus } from "../../helpers/constants";
@@ -21,7 +20,7 @@ interface IOrderElement {
 export const OrderElement = ({order} : IOrderElement) => {
     const location = useLocation();
     const dispatch = useAppDispatch();
-    const ingredientsMap = useSelector(ingredientsMapSelector);
+    const ingredientsMap = useAppSelector(ingredientsMapSelector);
     const [totalPrice, setTotalPrice] = useState(0);
 
     useEffect(() => {
