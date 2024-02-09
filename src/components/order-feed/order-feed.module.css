@@ -1,0 +1,11 @@
+.feed__wrapper {
+    box-sizing: border-box;
+    overflow-y: scroll;
+}
+
+.orders__list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    height: 80vh;
+}

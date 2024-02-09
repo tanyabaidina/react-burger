@@ -1,0 +1,7 @@
+.wrapper__order__feed {
+    width: 640px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin-top: 40px;
+}

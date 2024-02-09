@@ -1,31 +1,22 @@
 import { useParams } from "react-router-dom";
 import { useMemo, useEffect, JSX } from "react";
-import { useSelector } from "react-redux";
 
 import detailsStyle from './ingredient-details.module.css';
 import { setCurrentIngredient } from "../../services/actions/burger-ingredients/burger-ingredients-action-creators";
-import { useAppDispatch } from "../../services/store/store";
-import { IIngredient, TIngredientsData } from "../../helpers/types";
+import { useAppDispatch, useAppSelector } from "../../services/store/store";
 import { burgerIngredientsSelector } from "../../services/store/selectors";
 
 const IngredientDetails = (): JSX.Element => {
-    const { ingredients, currentIngredient, ingredientsRequest } = useSelector(burgerIngredientsSelector);
+    const { currentIngredient,
+            ingredientsRequest,
+            ingredientsMap } = useAppSelector(burgerIngredientsSelector);
+
     const { id } = useParams<{id: string}>();
     const dispatch = useAppDispatch();
 
-    const getCurrentIngredient = (ingredients: TIngredientsData, id: string | undefined) => {
-        let ingredient: IIngredient | null = null;
-        ["bun", "main", "sauce"].forEach((key) => {
-            const tempData: { [key: string]: IIngredient[] } = ingredients;
-            const temp = key in ingredients && tempData[key].find((item: IIngredient) => item._id === id)
-            if (temp) ingredient = temp;
-        })
-        return ingredient;
-    }
-
     const _currentIngredient = useMemo(() =>
-        getCurrentIngredient(ingredients, id),
-        [id, ingredients])
+        (id && ingredientsMap?.get(id)) || null,
+        [id, ingredientsMap])
 
     useEffect(() => {
         if (_currentIngredient) {

@@ -1,8 +1,8 @@
 import { Navigate, useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
 import { JSX } from "react";
 
 import { userDataSelector } from "../../services/store/selectors";
+import { useAppSelector } from "../../services/store/store";
 
 interface IProtectedComponent {
     onlyUnAuth?: boolean;
@@ -11,7 +11,7 @@ interface IProtectedComponent {
 }
 const ProtectedComponent = ({ onlyUnAuth = false, component, checkStep=false } : IProtectedComponent) => {
     const location = useLocation();
-    const { requestAuth, isAuth, forgotPasswordSuccess } =  useSelector(userDataSelector);
+    const { requestAuth, isAuth, forgotPasswordSuccess } =  useAppSelector(userDataSelector);
     const startPage = location.state?.from?.pathname || '/';
 
     if (requestAuth && !isAuth)

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { useDrop } from "react-dnd";
 import { useNavigate } from "react-router-dom";
 
@@ -13,7 +12,7 @@ import { ITEM_TYPES } from "../../helpers/constants";
 
 import ElementDropzone from "./element-dropzone/element-dropzone";
 import ConstructorListItem from "./constructor-list-item/constructor-list-item";
-import { useAppDispatch } from "../../services/store/store";
+import { useAppDispatch, useAppSelector} from "../../services/store/store";
 import { burgerConstructorSelector, isAuthSelector } from "../../services/store/selectors";
 
 import { IIngredientDnD } from "../../helpers/types"
@@ -23,8 +22,8 @@ interface IBurgerConstructorProps {
 }
 
 function BurgerConstructor({ onClick } : IBurgerConstructorProps) {
-    const { bun, ingredients } = useSelector(burgerConstructorSelector);
-    const isAuth =  useSelector(isAuthSelector);
+    const { bun, ingredients } = useAppSelector(burgerConstructorSelector);
+    const isAuth =  useAppSelector(isAuthSelector);
     const dispatch = useAppDispatch();
     const [totalPrice, setTotalPrice] = useState(0);
     const [warning, setWarning] = useState(false);

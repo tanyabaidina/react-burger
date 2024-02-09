@@ -1,17 +1,16 @@
 import {ChangeEvent, FC, FormEvent, useEffect, useState} from "react";
 import { useForm } from "../hooks/use-form";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
 
 import {PasswordInput, Button, EmailInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import loginStyle from "./account.module.css"
 import { loginUser } from "../services/actions/auth/login/login";
-import { useAppDispatch } from "../services/store/store";
+import { useAppDispatch, useAppSelector } from "../services/store/store";
 
 import { loginErrorSelector } from "../services/store/selectors";
 
 export const LoganPage: FC = () => {
-    const loginError =  useSelector(loginErrorSelector);
+    const loginError =  useAppSelector(loginErrorSelector);
     const [error, setError] = useState("");
     const { form, formChange, isValid } = useForm({});
     const dispatch = useAppDispatch();

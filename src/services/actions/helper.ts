@@ -5,8 +5,8 @@ import { TLogoutActionTypes } from "./auth/logout/logout";
 import { TRegisterActionTypes } from "./auth/register/register";
 import { TForgotPasswordActionTypes } from "./account/forgot-password/forgot-password";
 import { TResetPasswordActionTypes } from "./account/reset-password/reset-password";
-
-type TPayload = IUserData;
+import { TWebsocketActions } from "./order-feed";
+import { TWebsocketAuthActions } from "./order-feed-auth";
 
 export type InferValueTypes<T> = T extends { [key: string]: infer U } ? U : never;
 
@@ -34,10 +34,17 @@ export type TActionPayloadCreator = ReturnType<typeof actionPayloadCreator>;
 
 export type TActionErrorCreator = ReturnType<typeof actionErrorCreator>
 
-export type TAction =
+export type TUserActions =
     TUserActionTypes |
     TLoginActionTypes |
     TLogoutActionTypes |
     TRegisterActionTypes |
     TForgotPasswordActionTypes |
-    TResetPasswordActionTypes
+    TResetPasswordActionTypes;
+
+export type TAction =
+    TUserActions |
+    TWebsocketActions |
+    TWebsocketAuthActions;
+
+type TPayload = IUserData;
