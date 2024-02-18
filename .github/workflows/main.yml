@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - main
+      - sprint-6/step-1
 
 jobs:
   deploy:
