@@ -1,6 +1,7 @@
 <h1 align="center">ꜱᴛᴇʟʟᴀʀ ʙᴜʀɢᴇʀꜱ | космическая бургерная</h1>
 <h3 align="center">Проектная работа курса "React-разработчик", Яндекс Практикум</h3>
 
+[![Deploy to Hosting](https://github.com/tanyabaidina/react-burger/actions/workflows/main.yml/badge.svg?branch=sprint-6%2Fstep-1)](https://github.com/tanyabaidina/react-burger/actions/workflows/main.yml)
 
 ## Технологии
 
