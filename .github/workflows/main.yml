@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - main
+      - sprint-6/step-1
 
 jobs:
   deploy:
@@ -17,6 +18,7 @@ jobs:
             CI: false
         run: |
               npm i
+              npm run test-deploy
               npm run build
               cd build
 

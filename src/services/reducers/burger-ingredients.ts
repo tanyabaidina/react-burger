@@ -23,7 +23,7 @@ export const initialState: IBurgerIngredientsState = {
     ingredientsMap: null
 }
 
-const ingredientsByType = (ingredients : IIngredient[]) : TIngredientsData => {
+export const ingredientsByType = (ingredients : IIngredient[]) : TIngredientsData => {
     return ingredients.reduce((group: TIngredientsData, item) => {
         const tempData: { [key: string]: IIngredient[] } = group;
         return {

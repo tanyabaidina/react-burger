@@ -2,7 +2,7 @@
   "name": "react-burger",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://tanyabaidina.github.io/react-burger",
+  "homepage": "./",
   "dependencies": {
     "@reduxjs/toolkit": "^2.0.1",
     "@testing-library/jest-dom": "^5.17.0",
@@ -15,6 +15,7 @@
     "@ya.praktikum/react-developer-burger-ui-components": "^1.14.0",
     "axios": "^1.6.2",
     "immutability-helper": "^3.1.1",
+    "punycode": "^2.3.1",
     "react": "^18.2.0",
     "react-dnd": "^16.0.1",
     "react-dnd-html5-backend": "^16.0.1",
@@ -32,10 +33,12 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --runInBand --detectOpenHandles --transformIgnorePatterns \"node_modules/(?!axios)/\" --watchAll",
+    "test-deploy": "react-scripts test --runInBand --detectOpenHandles --transformIgnorePatterns \"node_modules/(?!axios)/\" --watchAll=false",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build",
+    "cypress:open": "./node_modules/.bin/cypress open"
   },
   "eslintConfig": {
     "extends": [
@@ -56,7 +59,10 @@
     ]
   },
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@types/uuid": "^9.0.7",
+    "cypress": "^13.6.4",
+    "eslint-plugin-cypress": "^2.15.1",
     "gh-pages": "^6.1.0"
   }
 }

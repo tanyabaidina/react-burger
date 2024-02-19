@@ -2,7 +2,6 @@ import {TRootState} from "./store";
 
 export const userDataSelector = (store: TRootState) =>  store.userData
 export const orderDetailsSelector = (store: TRootState) => store.orderDetails;
-export const ingredientDetailsSelector = (store: TRootState) => store.ingredientDetails;
 export const burgerIngredientsSelector = (store: TRootState) => store.burgerIngredients;
 export const burgerConstructorSelector = (store: TRootState) => store.burgerConstructor;
 
